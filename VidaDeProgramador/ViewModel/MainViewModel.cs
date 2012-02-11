@@ -7,22 +7,20 @@ namespace VidaDeProgramador.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly PostsService postsService;
         private ObservableCollection<Post> items;
-        private int position;
+        private RelayCommand maisTirinhas;
         private int page;
+        private int position;
 
         private int selectedIndex;
         private Post tirinha;
-        private readonly PostsService postsService;
 
         public MainViewModel()
         {
             postsService = new PostsService();
             Items = new ObservableCollection<Post>();
-            if (IsInDesignMode)
-            {
-                
-            } else
+            if (IsInDesignMode) {} else
             {
                 LoadData();
                 TirinhaSelected = new RelayCommand<Post>(post =>
@@ -30,6 +28,10 @@ namespace VidaDeProgramador.ViewModel
                     Tirinha = post;
                     SelectedIndex = 1;
                     Position = 0;
+                });
+                MaisTirinhas = new RelayCommand(() =>
+                {
+                    LoadData();
                 });
             }
         }
@@ -56,6 +58,16 @@ namespace VidaDeProgramador.ViewModel
             }
         }
 
+        public RelayCommand MaisTirinhas
+        {
+            get { return maisTirinhas; }
+            set
+            {
+                maisTirinhas = value;
+                RaisePropertyChanged("MaisTirinhas");
+            }
+        }
+
         public int SelectedIndex
         {
             get { return selectedIndex; }
@@ -78,7 +90,9 @@ namespace VidaDeProgramador.ViewModel
 
         public async void LoadData()
         {
-            Items = new ObservableCollection<Post>(await postsService.GetPosts(++page));
+            var posts = await postsService.GetPosts(++page);
+            foreach (var post in posts)
+                Items.Add(post);
         }
     }
 }

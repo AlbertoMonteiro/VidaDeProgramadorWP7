@@ -10,10 +10,7 @@ namespace VidaDeProgramador.Behaviors
         public static readonly DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register("SelectedIndex", typeof(int), typeof(TrackablePivotBehavior), new PropertyMetadata(0, SelectedIndexPropertyChanged));
 
-        private Pivot panarama;
-        private bool updatedFromUi;
-
-        // DP for binding index
+        private Pivot pivot;
 
         public int SelectedIndex
         {
@@ -28,37 +25,32 @@ namespace VidaDeProgramador.Behaviors
 
             var track = (TrackablePivotBehavior)dpObj;
 
-            // If this flag is not checked, the panorama smooth transition is overridden
-
-            Pivot pan = track.panarama;
+            var pivot = track.pivot;
 
             var index = (int)change.NewValue;
 
-            if (pan.Items.Count > index)
-                pan.SelectedIndex = (int)change.NewValue;
+            if (pivot.Items.Count > index)
+                pivot.SelectedIndex = (int)change.NewValue;
         }
 
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            panarama = AssociatedObject;
-            panarama.SelectionChanged += PanaramaSelectionChanged;
+            pivot = AssociatedObject;
+            pivot.SelectionChanged += PivotSelectionChanged;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
 
-            if (panarama != null)
-                panarama.SelectionChanged += PanaramaSelectionChanged;
+            if (pivot != null) pivot.SelectionChanged += PivotSelectionChanged;
         }
 
-        // Index changed by UI
-        private void PanaramaSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            updatedFromUi = true;
-            SelectedIndex = panarama.SelectedIndex;
+            SelectedIndex = pivot.SelectedIndex;
         }
     }
 }
