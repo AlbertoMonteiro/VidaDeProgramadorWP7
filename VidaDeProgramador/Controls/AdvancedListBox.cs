@@ -33,15 +33,13 @@ namespace VidaDeProgramador.Controls
                         if (Items.Any() && Math.Abs(sv.ScrollableHeight - sv.VerticalOffset) < 0.001)
                         {
                             var totalAtual = Items.Count;
-                            var triggers = Interaction.GetTriggers(this).Where(IsBottomArived);
-                            foreach (EventToCommand action in triggers.SelectMany(trigger => trigger.Actions).Where(IsEventToCommand))
+                            var total = Math.Max(totalPassado, totalAtual);
+                            if (totalPassado < total)
                             {
-                                var total = Math.Max(totalPassado, totalAtual);
-                                if (totalPassado < total)
-                                {
-                                    totalPassado = total;
+                                totalPassado = total;
+                                var triggers = Interaction.GetTriggers(this).Where(IsBottomArived);
+                                foreach (EventToCommand action in triggers.SelectMany(trigger => trigger.Actions).Where(IsEventToCommand))
                                     action.Command.Execute(this);
-                                }
                             }
                         }
                     };

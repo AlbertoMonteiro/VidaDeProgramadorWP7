@@ -20,7 +20,10 @@ namespace VidaDeProgramador.ViewModel
         {
             postsService = new PostsService();
             Items = new ObservableCollection<Post>();
-            if (IsInDesignMode) {} else
+            if (IsInDesignMode)
+            {
+                Tirinha = new Post(){Title = "Teste de tirinha grande"};
+            } else
             {
                 LoadData();
                 TirinhaSelected = new RelayCommand<Post>(post =>
