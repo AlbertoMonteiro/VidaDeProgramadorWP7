@@ -1,4 +1,6 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VidaDeProgramador.WordpressApi;
@@ -32,10 +34,7 @@ namespace VidaDeProgramador.ViewModel
                     SelectedIndex = 1;
                     Position = 0;
                 });
-                MaisTirinhas = new RelayCommand(() =>
-                {
-                    LoadData();
-                });
+                MaisTirinhas = new RelayCommand(LoadData);
             }
         }
 
@@ -93,9 +92,17 @@ namespace VidaDeProgramador.ViewModel
 
         public async void LoadData()
         {
-            var posts = await postsService.GetPosts(++page);
-            foreach (var post in posts)
-                Items.Add(post);
+            try
+            {
+                var posts = await postsService.GetPosts(++page);
+                foreach (var post in posts)
+                    Items.Add(post);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Vida de Programador", MessageBoxButton.OK);
+                throw new ExitException();
+            }
         }
     }
 }
