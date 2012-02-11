@@ -1,0 +1,41 @@
+﻿<phone:PhoneApplicationPage x:Class="VidaDeProgramador.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                            xmlns:track="clr-namespace:VidaDeProgramador.Behaviors" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Pivot Title="Vida de programador" Name="A">
+            <i:Interaction.Behaviors>
+                <track:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+            </i:Interaction.Behaviors>
+            <controls:PivotItem Header="Tirinhas">
+                <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Items}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <Command:EventToCommand Command="{Binding TirinhaSelected}" CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"></toolkit:WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="5"></toolkit:HubTile>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="{Binding Tirinha.Title}">
+                <ScrollViewer>
+                    <i:Interaction.Behaviors>
+                        <track:ScrollPositionBehavior Position="{Binding Position, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Tirinha.Title}"></TextBlock>
+                        <Image Source="{Binding Tirinha.Image}"></Image>
+                        <TextBlock Text="{Binding Tirinha.Body}" TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+</phone:PhoneApplicationPage>
