@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using VidaDeProgramador.Controls;
 
 namespace VidaDeProgramador.WordpressApi
 {
@@ -15,6 +16,7 @@ namespace VidaDeProgramador.WordpressApi
     {
         public async Task<IEnumerable<Post>> GetPosts(int page)
         {
+            GlobalLoading.Instance.PushLoading();
             var wc = new WebClient();
             var xml = await wc.DownloadStringTaskAsync(new Uri(string.Format("http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}", page)));
             var mem = new MemoryStream();
@@ -29,7 +31,8 @@ namespace VidaDeProgramador.WordpressApi
             const string corpo = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
             var imagemRegex = new Regex(imagem);
             var corpoRegex = new Regex(corpo);
-            
+
+            GlobalLoading.Instance.PopLoading();
             return from syndicationItem in feed.Items
                    let html = syndicationItem.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/")
                    let srcImagem = imagemRegex.Match(html[0]).Groups["imagem"].Value

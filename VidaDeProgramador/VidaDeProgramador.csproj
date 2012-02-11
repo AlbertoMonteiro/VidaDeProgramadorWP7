@@ -77,6 +77,7 @@
     <Compile Include="Behaviors\ScrollPositionBehavior.cs" />
     <Compile Include="Behaviors\TrackablePivotBehavior.cs" />
     <Compile Include="Controls\AdvancedListBox.cs" />
+    <Compile Include="Controls\GlobalLoading.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using VidaDeProgramador.Controls;
 using VidaDeProgramador.ViewModel;
 
 namespace VidaDeProgramador
@@ -145,6 +146,7 @@ namespace VidaDeProgramador
 
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
+            GlobalLoading.Instance.Initialize(RootFrame);
         }
 
         #endregion

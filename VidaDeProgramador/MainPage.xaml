@@ -37,8 +37,7 @@
                     </Controls:AdvancedListBox.ItemsPanel>
                     <Controls:AdvancedListBox.ItemTemplate>
                         <DataTemplate>
-                            <toolkit:HubTile Message="{Binding Title}" Title="{Binding Title}" Source="{Binding Image}"
-                                             Margin="5" />
+                            <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="5" />
                         </DataTemplate>
                     </Controls:AdvancedListBox.ItemTemplate>
                 </Controls:AdvancedListBox>
