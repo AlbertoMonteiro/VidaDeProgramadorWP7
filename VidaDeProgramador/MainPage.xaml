@@ -37,7 +37,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="5"></toolkit:HubTile>
+                            <toolkit:HubTile Message="{Binding Title}" Title="{Binding Title}" Source="{Binding Image}" Margin="5"></toolkit:HubTile>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </Controls:AdvancedListBox>

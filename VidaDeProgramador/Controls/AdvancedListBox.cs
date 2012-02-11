@@ -7,6 +7,8 @@ using System.Windows.Interactivity;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.Command;
 using EventTrigger = System.Windows.Interactivity.EventTrigger;
+using TriggerAction = System.Windows.Interactivity.TriggerAction;
+using TriggerBase = System.Windows.Interactivity.TriggerBase;
 
 namespace VidaDeProgramador.Controls
 {
@@ -18,21 +20,42 @@ namespace VidaDeProgramador.Controls
 
         #endregion
 
+        private int totalPassado = -1;
+
         public AdvancedListBox()
         {
             Loaded += (sender, args) =>
             {
-                var sv = (ScrollViewer) FindElementRecursive(this, typeof (ScrollViewer));
+                var sv = (ScrollViewer)FindElementRecursive(this, typeof(ScrollViewer));
                 if (sv != null)
                     sv.LayoutUpdated += (o, eventArgs) =>
                     {
                         if (Items.Any() && Math.Abs(sv.ScrollableHeight - sv.VerticalOffset) < 0.001)
-                            foreach (EventTrigger trigger in Interaction.GetTriggers(this))
-                                if (trigger.EventName == "OnListBoxBottomArived")
-                                    foreach (EventToCommand action in trigger.Actions.Where(x => x is EventToCommand))
-                                        action.Command.Execute(this);
+                        {
+                            var totalAtual = Items.Count;
+                            var triggers = Interaction.GetTriggers(this).Where(IsBottomArived);
+                            foreach (EventToCommand action in triggers.SelectMany(trigger => trigger.Actions).Where(IsEventToCommand))
+                            {
+                                var total = Math.Max(totalPassado, totalAtual);
+                                if (totalPassado < total)
+                                {
+                                    totalPassado = total;
+                                    action.Command.Execute(this);
+                                }
+                            }
+                        }
                     };
             };
+        }
+
+        private static bool IsEventToCommand(TriggerAction action)
+        {
+            return action is EventToCommand;
+        }
+
+        private static bool IsBottomArived(TriggerBase t)
+        {
+            return t is EventTrigger && ((EventTrigger)t).EventName == "OnListBoxBottomArived";
         }
 
         public event ListBoxBottomArived OnListBoxBottomArived;
