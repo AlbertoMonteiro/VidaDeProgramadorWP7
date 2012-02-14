@@ -14,25 +14,29 @@ namespace VidaDeProgramador.WordpressApi
 {
     public class PostsService
     {
+        const string Url = "http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}";
+        const string Imagem = @"<img src=""(?<imagem>.+)"" a";
+        const string Corpo = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
+
         public async Task<IEnumerable<Post>> GetPosts(int page)
         {
+            XmlReader reader = null;
+            MemoryStream contentSteam = null;
             try
             {
                 GlobalLoading.Instance.PushLoading();
-                var wc = new WebClient();
-                var xml = await wc.DownloadStringTaskAsync(new Uri(string.Format("http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}", page)));
-                var mem = new MemoryStream();
+                var webClient = new WebClient();
+                var xml = await webClient.DownloadStringTaskAsync(new Uri(string.Format(Url, page)));
+                contentSteam = new MemoryStream();
 
-                foreach (var b in Encoding.UTF8.GetBytes(xml)) mem.WriteByte(b);
-                mem.Seek(0, SeekOrigin.Begin);
+                Encoding.UTF8.GetBytes(xml).ToList().ForEach(contentSteam.WriteByte);
+                contentSteam.Seek(0, SeekOrigin.Begin);
 
-                var reader = XmlReader.Create(mem);
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-                const string imagem = @"<img src=""(?<imagem>.+)"" a";
-                const string corpo = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
-                var imagemRegex = new Regex(imagem);
-                var corpoRegex = new Regex(corpo);
+                reader = XmlReader.Create(contentSteam);
+                var feed = SyndicationFeed.Load(reader);
+                
+                var imagemRegex = new Regex(Imagem);
+                var corpoRegex = new Regex(Corpo);
 
                 GlobalLoading.Instance.PopLoading();
                 return from syndicationItem in feed.Items
@@ -50,6 +54,14 @@ namespace VidaDeProgramador.WordpressApi
             {
                 if (e.Response.ContentLength == 0)
                     throw new Exception("Impossível se conectar a internet, verifique sua conexão.");
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                    contentSteam.Close();
+                }
             }
             return null;
         }

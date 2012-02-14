@@ -101,7 +101,6 @@ namespace VidaDeProgramador.ViewModel
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Vida de Programador", MessageBoxButton.OK);
-                throw new ExitException();
             }
         }
     }

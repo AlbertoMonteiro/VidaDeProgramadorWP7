@@ -107,11 +107,6 @@ namespace VidaDeProgramador
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            if (e.ExceptionObject is ExitException)
-            {
-                return;
-            }
-
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
@@ -152,6 +147,7 @@ namespace VidaDeProgramador
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
             GlobalLoading.Instance.Initialize(RootFrame);
+            GlobalLoading.Instance.PushLoading();
         }
 
         #endregion
