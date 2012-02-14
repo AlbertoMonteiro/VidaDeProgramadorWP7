@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Tasks;
 using EventTrigger = System.Windows.Interactivity.EventTrigger;
 using TriggerAction = System.Windows.Interactivity.TriggerAction;
 using TriggerBase = System.Windows.Interactivity.TriggerBase;
@@ -26,18 +28,18 @@ namespace VidaDeProgramador.Controls
         {
             Loaded += (sender, args) =>
             {
-                var sv = (ScrollViewer)FindElementRecursive(this, typeof(ScrollViewer));
+                var sv = (ScrollViewer) FindElementRecursive(this, typeof (ScrollViewer));
                 if (sv != null)
                     sv.LayoutUpdated += (o, eventArgs) =>
                     {
                         if (Items.Any() && Math.Abs(sv.ScrollableHeight - sv.VerticalOffset) < 0.001)
                         {
-                            var totalAtual = Items.Count;
-                            var total = Math.Max(totalPassado, totalAtual);
+                            int totalAtual = Items.Count;
+                            int total = Math.Max(totalPassado, totalAtual);
                             if (totalPassado < total)
                             {
                                 totalPassado = total;
-                                var triggers = Interaction.GetTriggers(this).Where(IsBottomArived);
+                                IEnumerable<TriggerBase> triggers = Interaction.GetTriggers(this).Where(IsBottomArived);
                                 foreach (EventToCommand action in triggers.SelectMany(trigger => trigger.Actions).Where(IsEventToCommand))
                                     action.Command.Execute(this);
                             }
@@ -53,7 +55,7 @@ namespace VidaDeProgramador.Controls
 
         private static bool IsBottomArived(TriggerBase t)
         {
-            return t is EventTrigger && ((EventTrigger)t).EventName == "OnListBoxBottomArived";
+            return t is EventTrigger && ((EventTrigger) t).EventName == "OnListBoxBottomArived";
         }
 
         public event ListBoxBottomArived OnListBoxBottomArived;

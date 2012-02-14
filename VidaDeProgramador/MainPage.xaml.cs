@@ -1,15 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
-using VidaDeProgramador.Controls;
 
 namespace VidaDeProgramador
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private double actualWidth, actualHeight;
-        // Constructor
+        private double actualHeight;
+        private double actualWidth;
+
         public MainPage()
         {
             InitializeComponent();
@@ -17,32 +18,41 @@ namespace VidaDeProgramador
 
         private void OnPinchDelta(object sender, PinchGestureEventArgs e)
         {
-            var image = (Image)sender;
+            var image = (Image) sender;
             if (actualWidth == 0)
                 actualWidth = image.Width;
             if (actualHeight == 0)
                 actualHeight = image.Height;
-            var transform = (CompositeTransform)image.RenderTransform;
+
+            var renderTransform = (CompositeTransform) image.RenderTransform;
             if (e.DistanceRatio > 1)
             {
-                var distanceRatio = (int)e.DistanceRatio;
-                var d = e.DistanceRatio - distanceRatio;
-                transform.ScaleX = Math.Min(transform.ScaleX + d, 2);
-                transform.ScaleY = Math.Min(transform.ScaleY + d, 2);
-            }
-            else
+                var distanceRatio = (int) e.DistanceRatio;
+                double d = e.DistanceRatio - distanceRatio;
+                renderTransform.ScaleX = Math.Min(renderTransform.ScaleX + d, 2);
+                renderTransform.ScaleY = Math.Min(renderTransform.ScaleY + d, 2);
+            } else
             {
-
-                transform.ScaleX = Math.Max(transform.ScaleX - (1 - e.DistanceRatio), 1);
-                transform.ScaleY = Math.Max(transform.ScaleY - (1 - e.DistanceRatio), 1);
-                if (Math.Abs(transform.ScaleX) == 1)
+                renderTransform.ScaleX = Math.Max(renderTransform.ScaleX - (1 - e.DistanceRatio), 1);
+                renderTransform.ScaleY = Math.Max(renderTransform.ScaleY - (1 - e.DistanceRatio), 1);
+                if (Math.Abs(renderTransform.ScaleX) == 1)
                 {
                     image.Width = actualWidth;
                     image.Height = actualHeight;
                 }
             }
-            image.Width = image.ActualWidth * transform.ScaleX;
-            image.Height = image.ActualHeight * transform.ScaleY;
+            image.Width = image.ActualWidth*renderTransform.ScaleX;
+            image.Height = image.ActualHeight*renderTransform.ScaleY;
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            if (MainPivot.SelectedIndex != 0)
+            {
+                e.Cancel = true;
+                MainPivot.SelectedIndex = 0;
+            }
+            base.OnBackKeyPress(e);
         }
     }
 }

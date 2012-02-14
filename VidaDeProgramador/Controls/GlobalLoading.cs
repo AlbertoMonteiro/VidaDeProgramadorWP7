@@ -8,11 +8,14 @@ namespace VidaDeProgramador.Controls
     public class GlobalLoading
     {
         private static GlobalLoading _in;
+        private readonly Stack<bool> loadingStack;
         private int loadingCount;
         private ProgressIndicator mangoIndicator;
-        private readonly Stack<bool> loadingStack;
 
-        private GlobalLoading() { loadingStack = new Stack<bool>(); }
+        private GlobalLoading()
+        {
+            loadingStack = new Stack<bool>();
+        }
 
         public static GlobalLoading Instance
         {
@@ -45,7 +48,7 @@ namespace VidaDeProgramador.Controls
 
             frame.Navigated += OnRootFrameNavigated;
 
-            ((PhoneApplicationPage)frame.Content).SetValue(SystemTray.ProgressIndicatorProperty, mangoIndicator);
+            ((PhoneApplicationPage) frame.Content).SetValue(SystemTray.ProgressIndicatorProperty, mangoIndicator);
         }
 
         private void OnRootFrameNavigated(object sender, NavigationEventArgs e)

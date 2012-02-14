@@ -1,21 +1,6 @@
-﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                            xmlns:track="clr-namespace:VidaDeProgramador.Behaviors" xmlns:Controls="clr-namespace:VidaDeProgramador.Controls"
-                            x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-                            d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
-                            Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:track="clr-namespace:VidaDeProgramador.Behaviors" xmlns:Controls="clr-namespace:VidaDeProgramador.Controls" x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Title="Vida de programador">
+        <controls:Pivot Title="Vida de programador" Name="MainPivot">
             <i:Interaction.Behaviors>
                 <track:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
@@ -23,8 +8,7 @@
                 <Controls:AdvancedListBox x:Name="HubTirinhas" ItemsSource="{Binding Items}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <Command:EventToCommand Command="{Binding TirinhaSelected}"
-                                                    CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
+                            <Command:EventToCommand Command="{Binding TirinhaSelected}" CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
                         </i:EventTrigger>
                         <i:EventTrigger EventName="OnListBoxBottomArived">
                             <Command:EventToCommand Command="{Binding MaisTirinhas}" PassEventArgsToCommand="True" />
@@ -37,7 +21,10 @@
                     </Controls:AdvancedListBox.ItemsPanel>
                     <Controls:AdvancedListBox.ItemTemplate>
                         <DataTemplate>
-                            <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="5" />
+                            <StackPanel>
+                                <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="1" Width="240" />
+                                <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" MaxWidth="200" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </Controls:AdvancedListBox.ItemTemplate>
                 </Controls:AdvancedListBox>
@@ -61,20 +48,21 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
-            <controls:PivotItem Header="Sobre">				
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
-                            <Image.Projection>
-                                <PlaneProjection RotationX="15" RotationY="-20" RotationZ="1"/>
-                            </Image.Projection>
-                        </Image>						
-                        <StackPanel>
-                            <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">Autor: Alberto Monteiro</TextBlock>
-                            <HyperlinkButton NavigateUri="http://albertomonteiro.net" Content="Site"></HyperlinkButton>
-                            <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" Content="Twitter"></HyperlinkButton>
-                        </StackPanel>
+            <controls:PivotItem Header="Sobre">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                        <Image.Projection>
+                            <PlaneProjection RotationX="15" RotationY="-20" RotationZ="1" />
+                        </Image.Projection>
+                    </Image>
+                    <StackPanel>
+                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">Autor: Alberto Monteiro</TextBlock>
+                        <HyperlinkButton NavigateUri="http://albertomonteiro.net" TargetName="_blank" Content="Site"></HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank" Content="Twitter"></HyperlinkButton>
                     </StackPanel>
+                </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
+
 </phone:PhoneApplicationPage>

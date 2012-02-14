@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -23,11 +24,10 @@ namespace VidaDeProgramador.ViewModel
             postsService = new PostsService();
             Items = new ObservableCollection<Post>();
             if (IsInDesignMode)
+                Tirinha = new Post {Title = "Teste de tirinha grande"};
+            else
             {
-                Tirinha = new Post(){Title = "Teste de tirinha grande"};
-            } else
-            {
-                LoadData();
+                SynchronizationContext.Current.Post(state => LoadData(), null);
                 TirinhaSelected = new RelayCommand<Post>(post =>
                 {
                     Tirinha = post;
@@ -97,8 +97,7 @@ namespace VidaDeProgramador.ViewModel
                 var posts = await postsService.GetPosts(++page);
                 foreach (var post in posts)
                     Items.Add(post);
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Vida de Programador", MessageBoxButton.OK);
             }

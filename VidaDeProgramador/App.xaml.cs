@@ -147,7 +147,6 @@ namespace VidaDeProgramador
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
             GlobalLoading.Instance.Initialize(RootFrame);
-            GlobalLoading.Instance.PushLoading();
         }
 
         #endregion
