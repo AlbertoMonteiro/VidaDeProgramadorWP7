@@ -7,7 +7,7 @@
     <ManualTestCase Name="5.2.2">Pending</ManualTestCase>
     <ManualTestCase Name="5.2.3">Pending</ManualTestCase>
     <ManualTestCase Name="5.2.4.1">Pending</ManualTestCase>
-    <ManualTestCase Name="5.2.4.2">Pending</ManualTestCase>
+    <ManualTestCase Name="5.2.4.2">Passed</ManualTestCase>
     <ManualTestCase Name="5.2.4.3">Pending</ManualTestCase>
     <ManualTestCase Name="5.2.4.4">Pending</ManualTestCase>
     <ManualTestCase Name="5.2.6">Pending</ManualTestCase>

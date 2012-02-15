@@ -1,6 +1,6 @@
 namespace VidaDeProgramador.WordpressApi
 {
-    public class Post
+    public class Tirinha
     {
         public string Title { get; set; }
         public string Image { get; set; }

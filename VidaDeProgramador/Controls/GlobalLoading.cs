@@ -27,8 +27,8 @@ namespace VidaDeProgramador.Controls
             if (loadingStack.Count == 0)
             {
                 ++loadingCount;
-                NotifyValueChanged();
             }
+            NotifyValueChanged();
             loadingStack.Push(true);
         }
 
@@ -37,7 +37,7 @@ namespace VidaDeProgramador.Controls
             loadingStack.Pop();
             if (loadingStack.Count == 0)
             {
-                --loadingCount;
+                loadingCount = 0;
                 NotifyValueChanged();
             }
         }
@@ -53,8 +53,7 @@ namespace VidaDeProgramador.Controls
 
         private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
-            // Use in Mango to share a single progress indicator instance.
-            object ee = e.Content;
+            var ee = e.Content;
             var pp = ee as PhoneApplicationPage;
             if (pp != null)
                 pp.SetValue(SystemTray.ProgressIndicatorProperty, mangoIndicator);

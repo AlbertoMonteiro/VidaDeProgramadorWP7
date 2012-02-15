@@ -8,9 +8,9 @@ namespace VidaDeProgramador.ViewModel
 
         public ViewModelLocator()
         {
-            _main = new MainViewModel();
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                _main = new MainViewModel();
                 // Create design time services and viewmodels
             }
             else

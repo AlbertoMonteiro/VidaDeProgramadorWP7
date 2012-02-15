@@ -11,36 +11,36 @@ namespace VidaDeProgramador.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly PostsService postsService;
-        private ObservableCollection<Post> items;
+        private ObservableCollection<Tirinha> tirinhas;
         private RelayCommand maisTirinhas;
         private int page;
         private int position;
 
         private int selectedIndex;
-        private Post tirinha;
+        private Tirinha tirinha;
 
         public MainViewModel()
         {
+            Tirinhas = new ObservableCollection<Tirinha>();
             postsService = new PostsService();
-            Items = new ObservableCollection<Post>();
             if (IsInDesignMode)
-                Tirinha = new Post {Title = "Teste de tirinha grande"};
+                Tirinha = new Tirinha {Title = "Teste de tirinha grande"};
             else
             {
                 SynchronizationContext.Current.Post(state => LoadData(), null);
-                TirinhaSelected = new RelayCommand<Post>(post =>
+                TirinhaSelected = new RelayCommand<Tirinha>(post =>
                 {
                     Tirinha = post;
                     SelectedIndex = 1;
                     Position = 0;
                 });
-                MaisTirinhas = new RelayCommand(LoadData);
+                MaisTirinhas = new RelayCommand(() => LoadData());
             }
         }
 
-        public RelayCommand<Post> TirinhaSelected { get; set; }
+        public RelayCommand<Tirinha> TirinhaSelected { get; set; }
 
-        public Post Tirinha
+        public Tirinha Tirinha
         {
             get { return tirinha; }
             set
@@ -50,13 +50,13 @@ namespace VidaDeProgramador.ViewModel
             }
         }
 
-        public ObservableCollection<Post> Items
+        public ObservableCollection<Tirinha> Tirinhas
         {
-            get { return items; }
+            get { return tirinhas; }
             set
             {
-                items = value;
-                RaisePropertyChanged("Items");
+                tirinhas = value;
+                RaisePropertyChanged("Tirinhas");
             }
         }
 
@@ -90,13 +90,15 @@ namespace VidaDeProgramador.ViewModel
             }
         }
 
-        public async void LoadData()
+        public async void LoadData(bool primeiraPagina = false)
         {
             try
             {
+                if (primeiraPagina)
+                    page = 0;
                 var posts = await postsService.GetPosts(++page);
                 foreach (var post in posts)
-                    Items.Add(post);
+                    Tirinhas.Add(post);
             } catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Vida de Programador", MessageBoxButton.OK);

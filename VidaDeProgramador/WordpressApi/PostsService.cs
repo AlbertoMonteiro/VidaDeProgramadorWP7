@@ -18,13 +18,13 @@ namespace VidaDeProgramador.WordpressApi
         const string Imagem = @"<img src=""(?<imagem>.+)"" a";
         const string Corpo = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
 
-        public async Task<IEnumerable<Post>> GetPosts(int page)
+        public async Task<IEnumerable<Tirinha>> GetPosts(int page)
         {
+            GlobalLoading.Instance.PushLoading();
             XmlReader reader = null;
             MemoryStream contentSteam = null;
             try
             {
-                GlobalLoading.Instance.PushLoading();
                 var webClient = new WebClient();
                 var xml = await webClient.DownloadStringTaskAsync(new Uri(string.Format(Url, page)));
                 contentSteam = new MemoryStream();
@@ -37,13 +37,12 @@ namespace VidaDeProgramador.WordpressApi
                 
                 var imagemRegex = new Regex(Imagem);
                 var corpoRegex = new Regex(Corpo);
-
-                GlobalLoading.Instance.PopLoading();
+                
                 return from syndicationItem in feed.Items
                        let html = syndicationItem.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/")
                        let srcImagem = imagemRegex.Match(html[0]).Groups["imagem"].Value
                        let body = corpoRegex.Match(html[0]).Groups["corpo"].Value
-                       select new Post
+                       select new Tirinha
                        {
                            Title = syndicationItem.Title.Text,
                            Image = srcImagem,
@@ -57,6 +56,7 @@ namespace VidaDeProgramador.WordpressApi
             }
             finally
             {
+                GlobalLoading.Instance.PopLoading();
                 if (reader != null)
                 {
                     reader.Close();

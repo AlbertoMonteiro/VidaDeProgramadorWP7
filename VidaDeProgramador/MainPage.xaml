@@ -1,11 +1,11 @@
-﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:track="clr-namespace:VidaDeProgramador.Behaviors" xmlns:Controls="clr-namespace:VidaDeProgramador.Controls" x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:track="clr-namespace:VidaDeProgramador.Behaviors" xmlns:Controls="clr-namespace:VidaDeProgramador.Controls" x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <controls:Pivot Title="Vida de programador" Name="MainPivot">
             <i:Interaction.Behaviors>
                 <track:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
             <controls:PivotItem Header="Tirinhas">
-                <Controls:AdvancedListBox x:Name="HubTirinhas" ItemsSource="{Binding Items}">
+                <Controls:AdvancedListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <Command:EventToCommand Command="{Binding TirinhaSelected}" CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
@@ -22,7 +22,7 @@
                     <Controls:AdvancedListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="1" Width="240" />
+                                <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="1" Width="220" Padding="0"/>
                                 <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" MaxWidth="200" TextWrapping="Wrap"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
@@ -56,7 +56,9 @@
                         </Image.Projection>
                     </Image>
                     <StackPanel>
-                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">Autor: Alberto Monteiro</TextBlock>
+                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">
+                            Autor: Alberto Monteiro
+                        </TextBlock>
                         <HyperlinkButton NavigateUri="http://albertomonteiro.net" TargetName="_blank" Content="Site"></HyperlinkButton>
                         <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank" Content="Twitter"></HyperlinkButton>
                     </StackPanel>
@@ -64,5 +66,15 @@
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
-
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar x:Name="AppBar">
+            <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas" Text="Carregar"></shell:ApplicationBarIconButton>
+            </shell:ApplicationBar.Buttons>
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="mnuItemX" Text="Menu Item X"></shell:ApplicationBarMenuItem>
+                <shell:ApplicationBarMenuItem x:Name="mnuItemY" Text="Menu Item Y"></shell:ApplicationBarMenuItem>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
