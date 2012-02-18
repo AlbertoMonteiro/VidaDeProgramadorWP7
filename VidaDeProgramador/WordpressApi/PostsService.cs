@@ -8,15 +8,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
-using VidaDeProgramador.Controls;
+using AlbertoMonteiroWP7Tools.Controls;
 
 namespace VidaDeProgramador.WordpressApi
 {
     public class PostsService
     {
-        const string Url = "http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}";
-        const string Imagem = @"<img src=""(?<imagem>.+)"" a";
-        const string Corpo = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
+        const string URL = "http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}";
+        const string IMAGEM = @"<img src=""(?<imagem>.+)"" a";
+        const string CORPO = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
 
         public async Task<IEnumerable<Tirinha>> GetPosts(int page)
         {
@@ -26,7 +26,7 @@ namespace VidaDeProgramador.WordpressApi
             try
             {
                 var webClient = new WebClient();
-                var xml = await webClient.DownloadStringTaskAsync(new Uri(string.Format(Url, page)));
+                var xml = await webClient.DownloadStringTaskAsync(new Uri(string.Format(URL, page)));
                 contentSteam = new MemoryStream();
 
                 Encoding.UTF8.GetBytes(xml).ToList().ForEach(contentSteam.WriteByte);
@@ -35,8 +35,8 @@ namespace VidaDeProgramador.WordpressApi
                 reader = XmlReader.Create(contentSteam);
                 var feed = SyndicationFeed.Load(reader);
                 
-                var imagemRegex = new Regex(Imagem);
-                var corpoRegex = new Regex(Corpo);
+                var imagemRegex = new Regex(IMAGEM);
+                var corpoRegex = new Regex(CORPO);
                 
                 return from syndicationItem in feed.Items
                        let html = syndicationItem.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/")

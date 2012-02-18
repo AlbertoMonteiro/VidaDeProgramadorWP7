@@ -76,10 +76,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Behaviors\ScrollPositionBehavior.cs" />
-    <Compile Include="Behaviors\TrackablePivotBehavior.cs" />
-    <Compile Include="Controls\AdvancedListBox.cs" />
-    <Compile Include="Controls\GlobalLoading.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -115,6 +111,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AlbertoMonteiroWP7Tools\AlbertoMonteiroWP7Tools\AlbertoMonteiroWP7Tools.csproj">
+      <Project>{424B6F6C-D52F-4EBD-9107-27B03CF63848}</Project>
+      <Name>AlbertoMonteiroWP7Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
+using AlbertoMonteiroWP7Tools.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using VidaDeProgramador.Controls;
 using VidaDeProgramador.ViewModel;
 
 namespace VidaDeProgramador
