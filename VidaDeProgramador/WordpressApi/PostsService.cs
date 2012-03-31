@@ -46,7 +46,8 @@ namespace VidaDeProgramador.WordpressApi
                        {
                            Title = syndicationItem.Title.Text,
                            Image = srcImagem,
-                           Body = HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine))
+                           Body = HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine)),
+                           Link = syndicationItem.Id
                        };
             }
             catch (WebException e)

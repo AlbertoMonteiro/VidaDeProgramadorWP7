@@ -1,17 +1,23 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 using VidaDeProgramador.ViewModel;
+using VidaDeProgramador.WordpressApi;
 
 namespace VidaDeProgramador
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage
     {
+        private const string formato = "Lendo a tirinha {0} do @programadorreal via VidaDeProgramador para #WP7 {1}";
         private double actualHeight;
         private double actualWidth;
+        private Tirinha tirinha;
 
         public MainPage()
         {
@@ -22,9 +28,34 @@ namespace VidaDeProgramador
                 var mainViewModel = (MainViewModel)(DataContext = new MainViewModel());
                 mainViewModel.Tirinhas.CollectionChanged += (sender, args) =>
                 {
-                    ApplicationBar.IsVisible = !mainViewModel.Tirinhas.Any();
+                    var btn = ApplicationBar.Buttons[0] as ApplicationBarIconButton;
+                    if (btn != null)
+                        btn.IsEnabled = !mainViewModel.Tirinhas.Any();
                 };
+                var dataContext = (MainViewModel)DataContext;
+                dataContext.PropertyChanged += (sender, args) => ViewModelPropertyChanged(args, sender);
             };
+        }
+
+        private void ViewModelPropertyChanged(PropertyChangedEventArgs args, object sender)
+        {
+            if (args != null && args.PropertyName == "SelectedIndex" && sender is MainViewModel)
+            {
+                var viewModel = (MainViewModel)sender;
+                tirinha = viewModel.Tirinha;
+            }
+        }
+
+        private void ShareClick(object sender, EventArgs e)
+        {
+            try
+            {
+                CurrentTasks.Current.Share(string.Format(formato, tirinha.Title, tirinha.Link));
+            }
+            catch (Exception ex)
+            {
+                SendExceptionMain(ex);
+            }
         }
 
         private void OnPinchDelta(object sender, PinchGestureEventArgs e)
@@ -71,7 +102,38 @@ namespace VidaDeProgramador
         {
             var mainViewModel = DataContext as MainViewModel;
             if (mainViewModel != null && !mainViewModel.Tirinhas.Any())
-                mainViewModel.LoadData(primeiraPagina:true);
+                mainViewModel.LoadData(primeiraPagina: true);
+        }
+
+        private void AvaliarClick(object sender, EventArgs e)
+        {
+            var marketplaceReviewTask = new MarketplaceReviewTask();
+            marketplaceReviewTask.Show();
+        }
+
+        private void RecomendacaoClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Dispatcher.BeginInvoke(() => CurrentTasks.Current.Share("Gosta das tirinhas do Vida de Programador? Acompanhe usando a app p/ wp7 do @AIbertoMonteiro http://bit.ly/HrgRp1"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                SendExceptionMain(ex);
+            }
+            catch (Exception ex)
+            {
+                SendExceptionMain(ex);
+            }
+        }
+
+        private static void SendExceptionMain(Exception ex)
+        {
+            var messageBoxResult = MessageBox.Show("Não foi possível abrir o dialog de compartilhamento.\nDeseja enviar o erro ao desenvolvedor da aplicação?", "Vida de Programador", MessageBoxButton.OKCancel);
+            if (messageBoxResult == MessageBoxResult.OK)
+            {
+                CurrentTasks.Current.SendMail(string.Format("Exception message: {0}\nStacktrace: {1}", ex.InnerException, ex.StackTrace));
+            }
         }
     }
 }

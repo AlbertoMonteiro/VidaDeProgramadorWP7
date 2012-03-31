@@ -10,8 +10,7 @@
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:Behaviors="clr-namespace:AlbertoMonteiroWP7Tools.Behaviors;assembly=AlbertoMonteiroWP7Tools"
                             xmlns:Controls1="clr-namespace:AlbertoMonteiroWP7Tools.Controls;assembly=AlbertoMonteiroWP7Tools"
-                            x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
-                            d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+                            x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"                            
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
@@ -90,14 +89,14 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar x:Name="AppBar">
+        	<shell:ApplicationBar.MenuItems>
+        		<shell:ApplicationBarMenuItem Text="recomende" Click="RecomendacaoClick"/>
+        	</shell:ApplicationBar.MenuItems>
             <shell:ApplicationBar.Buttons>
-                <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas"
-                                                Text="Carregar"></shell:ApplicationBarIconButton>
+                <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas" Text="Carregar" x:Name="Refresh" />
+                <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar" Click="ShareClick"/>
+                <shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="Avalie" Click="AvaliarClick"/>
             </shell:ApplicationBar.Buttons>
-            <!--<shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="mnuItemX" Text="Menu Item X"></shell:ApplicationBarMenuItem>
-                <shell:ApplicationBarMenuItem x:Name="mnuItemY" Text="Menu Item Y"></shell:ApplicationBarMenuItem>
-            </shell:ApplicationBar.MenuItems>-->
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
