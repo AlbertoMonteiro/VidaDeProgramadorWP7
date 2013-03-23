@@ -72,6 +72,7 @@ namespace VidaDeProgramador
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            GlobalLoading.Instance.Initialize(RootFrame);
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -145,7 +146,6 @@ namespace VidaDeProgramador
 
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
-            GlobalLoading.Instance.Initialize(RootFrame);
         }
 
         #endregion

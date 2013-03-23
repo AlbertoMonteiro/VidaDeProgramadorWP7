@@ -6,9 +6,11 @@ using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using AlbertoMonteiroWP7Tools.Controls;
+using AlbertoMonteiroWP7Tools.Extensions;
 
 namespace VidaDeProgramador.WordpressApi
 {
@@ -21,12 +23,13 @@ namespace VidaDeProgramador.WordpressApi
         public async Task<IEnumerable<Tirinha>> GetPosts(int page)
         {
             GlobalLoading.Instance.PushLoading();
+           
             XmlReader reader = null;
             MemoryStream contentSteam = null;
             try
             {
                 var webClient = new WebClient();
-                var xml = await webClient.DownloadStringTaskAsync(new Uri(string.Format(URL, page)));
+                var xml = await webClient.DownloadString(new Uri(string.Format(URL, page)));
                 contentSteam = new MemoryStream();
 
                 Encoding.UTF8.GetBytes(xml).ToList().ForEach(contentSteam.WriteByte);

@@ -20,7 +20,7 @@
                 <Behaviors:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
             <controls:PivotItem Header="Tirinhas">
-                <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}" Controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}">
+                <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}" Controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}"  VirtualizingStackPanel.VirtualizationMode="Recycling">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <Command:EventToCommand Command="{Binding TirinhaSelected}"
@@ -29,7 +29,7 @@
                     </i:Interaction.Triggers>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <toolkit:WrapPanel Orientation="Horizontal" />
+                            <toolkit:WrapPanel Orientation="Horizontal"  VirtualizingStackPanel.VirtualizationMode="Recycling"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
