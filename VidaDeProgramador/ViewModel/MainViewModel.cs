@@ -100,8 +100,7 @@ namespace VidaDeProgramador.ViewModel
                     _loadingData = true;
                     if (primeiraPagina)
                         _page = 0;
-                    var posts = await
-                    _postsService.GetPosts(++_page);
+                    var posts = await _postsService.GetPosts(++_page);
                     foreach (var post in posts)
                         Tirinhas.Add(post);
                 }

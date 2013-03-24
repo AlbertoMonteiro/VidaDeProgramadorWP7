@@ -5,98 +5,57 @@
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:Behaviors="clr-namespace:AlbertoMonteiroWP7Tools.Behaviors;assembly=AlbertoMonteiroWP7Tools"
                             xmlns:Controls1="clr-namespace:AlbertoMonteiroWP7Tools.Controls;assembly=AlbertoMonteiroWP7Tools"
-                            x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"                            
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
-                            Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" DataContext="{Binding Main, Source={StaticResource Locator}}">
+                            x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480"
+                            d:DesignHeight="696" SupportedOrientations="Portrait" Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar x:Name="AppBar">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="recomende" Click="RecomendacaoClick" />
+            </shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas" Text="Carregar" x:Name="Refresh" />
+            <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar" Click="ShareClick" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="Avalie" Click="AvaliarClick" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Title="Vida de programador" Name="MainPivot">
+        <controls:Pivot Title="Vida de programador" x:Name="MainPivot">
             <i:Interaction.Behaviors>
                 <Behaviors:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
             </i:Interaction.Behaviors>
             <controls:PivotItem Header="Tirinhas">
-                <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}" Controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}"  VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}"
+                         Controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling"
+                         ItemTemplate="{StaticResource TirinhasThumb}" ItemsPanel="{StaticResource ItemPanelWrapPanel}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <Command:EventToCommand Command="{Binding TirinhaSelected}"
                                                     CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel Orientation="Horizontal"  VirtualizingStackPanel.VirtualizationMode="Recycling"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <toolkit:HubTile Message="{Binding Title}" Source="{Binding Image}" Margin="1"
-                                                 Width="220" Padding="0" />
-                                <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" MaxWidth="200"
-                                           TextWrapping="Wrap"></TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                 </ListBox>
-            </controls:PivotItem>
-            <controls:PivotItem Header="{Binding Tirinha.Title}">
-                <ScrollViewer HorizontalScrollBarVisibility="Visible">
-                    <i:Interaction.Behaviors>
-                        <Behaviors:ScrollPositionBehavior Position="{Binding Position, Mode=TwoWay}" />
-                    </i:Interaction.Behaviors>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Tirinha.Title}" FontSize="24" MaxWidth="460"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <Image Source="{Binding Tirinha.Image}" Stretch="None" HorizontalAlignment="Left"
-                               VerticalAlignment="Top">
-                            <Image.RenderTransform>
-                                <CompositeTransform x:Name="transform" />
-                            </Image.RenderTransform>
-                            <toolkit:GestureService.GestureListener>
-                                <toolkit:GestureListener PinchDelta="OnPinchDelta" />
-                            </toolkit:GestureService.GestureListener>
-                        </Image>
-                        <TextBlock Text="{Binding Tirinha.Body}" TextWrapping="Wrap" MaxWidth="460"
-                                   HorizontalAlignment="Left" />
-                    </StackPanel>
-                </ScrollViewer>
             </controls:PivotItem>
             <controls:PivotItem Header="Sobre">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200"
-                           VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                    <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
                         <Image.Projection>
                             <PlaneProjection RotationX="15" RotationY="-20" RotationZ="1" />
                         </Image.Projection>
                     </Image>
                     <StackPanel>
-                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap"
-                                   TextTrimming="WordEllipsis">
-                            Autor: Alberto Monteiro
+                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">
+                            <Run Text="Autor: Alberto Monteiro" />
                         </TextBlock>
-                        <HyperlinkButton NavigateUri="http://albertomonteiro.net" TargetName="_blank" Content="Site"></HyperlinkButton>
-                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank"
-                                         Content="Twitter"></HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://albertomonteiro.net.br" TargetName="_blank" Content="Site" />
+                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank" Content="Twitter" />
                     </StackPanel>
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar x:Name="AppBar">
-        	<shell:ApplicationBar.MenuItems>
-        		<shell:ApplicationBarMenuItem Text="recomende" Click="RecomendacaoClick"/>
-        	</shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBar.Buttons>
-                <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas" Text="Carregar" x:Name="Refresh" />
-                <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar" Click="ShareClick"/>
-                <shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="Avalie" Click="AvaliarClick"/>
-            </shell:ApplicationBar.Buttons>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

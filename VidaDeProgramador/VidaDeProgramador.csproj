@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlbertoMonteiroWP7Tools">
+      <HintPath>..\packages\AlbertoMonteiroWP7Tools.1.0.0-alpha\lib\wp71\AlbertoMonteiroWP7Tools.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WP71, Version=4.1.27.22669, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
@@ -60,18 +63,25 @@
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
-    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\packages\Prism.Interactivity.WindowsPhone7.4.1.0\lib\sl4-windowsphone71\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.12-beta\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.12-beta\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.12-beta\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime">
       <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
@@ -90,17 +100,26 @@
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WriteableBitmapExWinPhone">
+      <HintPath>..\packages\WriteableBitmapEx.1.0.7.0\lib\sl4-wp71\WriteableBitmapExWinPhone.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\TirinhaToImage.cs" />
     <Compile Include="CurrentTasks.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TirinhaView.xaml.cs">
+      <DependentUpon>TirinhaView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\TirinhaViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="WordpressApi\Tirinha.cs" />
     <Compile Include="WordpressApi\PostsService.cs" />
@@ -111,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TirinhaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,13 +161,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MVVMLight.Nuget.Readme.txt" />
+    <Content Include="novo.png" />
+    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\AlbertoMonteiroWP7Tools\AlbertoMonteiroWP7Tools\AlbertoMonteiroWP7Tools.csproj">
-      <Project>{424B6F6C-D52F-4EBD-9107-27B03CF63848}</Project>
-      <Name>AlbertoMonteiroWP7Tools</Name>
-    </ProjectReference>
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

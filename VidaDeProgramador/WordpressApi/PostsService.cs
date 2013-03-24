@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using AlbertoMonteiroWP7Tools.Controls;
 using AlbertoMonteiroWP7Tools.Extensions;
 
@@ -17,41 +18,52 @@ namespace VidaDeProgramador.WordpressApi
     public class PostsService
     {
         const string URL = "http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}";
-        const string IMAGEM = @"<img src=""(?<imagem>.+)"" a";
+        const string IMAGEM = @"<img src=\""(?<imagem>[\w:/.-]+)\""";
         const string CORPO = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
 
         public async Task<IEnumerable<Tirinha>> GetPosts(int page)
         {
             GlobalLoading.Instance.PushLoading();
-           
-            XmlReader reader = null;
-            MemoryStream contentSteam = null;
+
+            var contentSteam = new MemoryStream();
             try
             {
                 var webClient = new WebClient();
                 var xml = await webClient.DownloadString(new Uri(string.Format(URL, page)));
-                contentSteam = new MemoryStream();
 
                 Encoding.UTF8.GetBytes(xml).ToList().ForEach(contentSteam.WriteByte);
                 contentSteam.Seek(0, SeekOrigin.Begin);
 
-                reader = XmlReader.Create(contentSteam);
-                var feed = SyndicationFeed.Load(reader);
-                
+                XDocument xDocument = XDocument.Load(contentSteam);
+
+                var rss = xDocument.Element("rss");
+
+                var wfw = rss.GetNamespaceOfPrefix(@"wfw");
+                var slash = rss.GetNamespaceOfPrefix(@"slash");
+
                 var imagemRegex = new Regex(IMAGEM);
                 var corpoRegex = new Regex(CORPO);
-                
-                return from syndicationItem in feed.Items
-                       let html = syndicationItem.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/")
-                       let srcImagem = imagemRegex.Match(html[0]).Groups["imagem"].Value
-                       let body = corpoRegex.Match(html[0]).Groups["corpo"].Value
-                       select new Tirinha
-                       {
-                           Title = syndicationItem.Title.Text,
-                           Image = srcImagem,
-                           Body = HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine)),
-                           Link = syndicationItem.Id
-                       };
+
+                var tirinhas = new List<Tirinha>();
+
+                foreach (var item in rss.Element("channel").Elements("item"))
+                {
+                    var srcImagem = imagemRegex.Match(item.Element("description").Value).Groups["imagem"].Value;
+                    var body = corpoRegex.Match(item.Element("description").Value).Groups["corpo"].Value;
+
+                    var tirinha = new Tirinha()
+                    {
+                        Title = item.Element("title").Value,
+                        Body = HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine)),
+                        Image = srcImagem,
+                        Link = item.Element("link").Value,
+                        PublicadoEm = DateTime.Parse(item.Element("pubDate").Value),
+                        LinkComentarios = item.Element(XName.Get("commentRss", wfw.NamespaceName)).Value,
+                        TotalComentarios = int.Parse(item.Element(XName.Get("comments", slash.NamespaceName)).Value)
+                    };
+                    tirinhas.Add(tirinha);
+                }
+                return tirinhas;
             }
             catch (WebException e)
             {
@@ -61,11 +73,7 @@ namespace VidaDeProgramador.WordpressApi
             finally
             {
                 GlobalLoading.Instance.PopLoading();
-                if (reader != null)
-                {
-                    reader.Close();
-                    contentSteam.Close();
-                }
+                contentSteam.Close();
             }
             return null;
         }

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>AlbertoMonteiroWP7Tools</id>
+    <version>1.0.0-alpha</version>
+    <title>WPTools</title>
+    <authors>Alberto Monteiro</authors>
+    <owners>Alberto Monteiro</owners>
+    <projectUrl>https://github.com/AlbertoMonteiro/AlbertoMonteiroWP7Tools</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows Phone Tools</description>
+    <copyright>Copyright ©  2012</copyright>
+    <dependencies>
+      <dependency id="Microsoft.Bcl" version="1.0.16-rc" />
+      <dependency id="Microsoft.Bcl.Async" version="1.0.12-beta" />
+      <dependency id="Microsoft.Bcl.Build" version="1.0.0-rc" />
+      <dependency id="Prism.Interactivity.WindowsPhone7" version="4.1.0" />
+    </dependencies>
+    <references>
+      <reference file="AlbertoMonteiroWP7Tools.dll" />
+    </references>
+  </metadata>
+</package>
