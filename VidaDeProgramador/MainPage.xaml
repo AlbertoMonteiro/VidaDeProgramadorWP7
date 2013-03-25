@@ -6,9 +6,8 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                            xmlns:Behaviors="clr-namespace:AlbertoMonteiroWP7Tools.Behaviors;assembly=AlbertoMonteiroWP7Tools"
-                            xmlns:Controls1="clr-namespace:AlbertoMonteiroWP7Tools.Controls;assembly=AlbertoMonteiroWP7Tools"
+                            xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                            xmlns:controls1="clr-namespace:AlbertoMonteiroWP7Tools.Controls;assembly=AlbertoMonteiroWP7Tools"
                             x:Class="VidaDeProgramador.MainPage" mc:Ignorable="d" d:DesignWidth="480"
                             d:DesignHeight="696" SupportedOrientations="Portrait" Orientation="Portrait"
                             DataContext="{Binding Main, Mode=OneWay, Source={StaticResource Locator}}"
@@ -28,12 +27,12 @@
         <controls:Pivot Title="Vida de programador" x:Name="MainPivot">
             <controls:PivotItem Header="Tirinhas">
                 <ListBox x:Name="HubTirinhas" ItemsSource="{Binding Tirinhas}"
-                         Controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}"
+                         controls1:ScrollViewerMonitor.AtEndCommand="{Binding MaisTirinhas}"
                          VirtualizingStackPanel.VirtualizationMode="Recycling"
                          ItemTemplate="{StaticResource TirinhasThumb}" ItemsPanel="{StaticResource ItemPanelWrapPanel}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <Command:EventToCommand Command="{Binding TirinhaSelected}"
+                            <command:EventToCommand Command="{Binding TirinhaSelected}"
                                                     CommandParameter="{Binding SelectedItem, ElementName=HubTirinhas}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -48,13 +47,10 @@
                         </Image.Projection>
                     </Image>
                     <StackPanel>
-                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap"
-                                   TextTrimming="WordEllipsis">
-                            <Run Text="Autor: Alberto Monteiro" />
-                        </TextBlock>
+                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis" Text="Autor: Alberto Monteiro"/>
                         <HyperlinkButton NavigateUri="http://albertomonteiro.net.br" TargetName="_blank" Content="Site" />
-                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank"
-                                         Content="Twitter" />
+                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank" Content="Twitter" />
+                        <HyperlinkButton NavigateUri="http://twitter.com/VDPWindowsPhone" TargetName="_blank" Content="Twitter da aplicação" />
                     </StackPanel>
                 </StackPanel>
             </controls:PivotItem>

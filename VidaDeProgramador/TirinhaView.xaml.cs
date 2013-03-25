@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Phone.Controls;
 using VidaDeProgramador.Utils;
@@ -36,5 +37,10 @@ namespace VidaDeProgramador
                 CurrentTasks.Current.SendMail(string.Format("Exception message: {0}\nStacktrace: {1}", ex.InnerException, ex.StackTrace));
         }
 
+        private void phoneApplicationPage_OrientationChanged(object sender, OrientationChangedEventArgs e)
+        {
+            var tirinhaViewModel = (TirinhaViewModel) DataContext;
+            tirinhaViewModel.OrientacaoAlterada.Execute(e.Orientation);
+        }
     }
 }

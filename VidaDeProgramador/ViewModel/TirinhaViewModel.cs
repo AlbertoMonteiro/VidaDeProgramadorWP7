@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Navigation;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Controls;
 using VidaDeProgramador.Persistence;
 using VidaDeProgramador.WordpressApi;
 using NavigationService = AlbertoMonteiroWP7Tools.Navigation.NavigationService;
@@ -23,31 +25,22 @@ namespace VidaDeProgramador.ViewModel
             this.navigationService = navigationService;
             if (IsInDesignMode)
             {
-                Tirinha = new Tirinha
-                {
-                    Body = @"real historia;
-string sender;
-sender = ""Walter Mariano"";
-Amigo: Cara, você que manja, precisa me dar umas aulas de informática…
-Programador: Aulas??
-Amigo: É… Tipo, você tem que me ensinar a baixar músicas, instalar coisas… Também nunca consigo imprimir… Não sei nada de informática…
-Programador: Ih, não vai dar… Meu diploma é de computação, não de pedagogia…
-–
-Camiseta: Vá pedir aulas ao Divasca!",
-                    Image = "http://vidadeprogramador.com.br/wp-content/uploads/2013/03/tirinha923.png",
-                    Link = "http://vidadeprogramador.com.br/2013/03/22/aulas/",
-                    Title = "Aulas"
-                };
+                Tirinha = new Tirinha();
             }
             else
             {
                 vdpContext = new VDPContext();
                 this.navigationService.Navigated += AtualizaTirinha;
-                PropertyChanged+=(sender, args) =>
+                PropertyChanged += (sender, args) =>
                 {
                     if (args.PropertyName == "SelectedIndex" && SelectedIndex == 2)
                         MessageBox.Show("Carregar comentarios");
                 };
+                OrientacaoAlterada = new RelayCommand<PageOrientation>(pageOrientation =>
+                {
+                    LandscapeLayoutVisible = pageOrientation == PageOrientation.LandscapeLeft || pageOrientation == PageOrientation.LandscapeRight ? Visibility.Visible :  Visibility.Collapsed;
+                    PortraitLayoutVisible = pageOrientation == PageOrientation.PortraitUp ? Visibility.Visible :  Visibility.Collapsed;
+                });
             }
         }
 
@@ -91,15 +84,19 @@ Camiseta: Vá pedir aulas ao Divasca!",
             }
         }
 
+        public RelayCommand<PageOrientation> OrientacaoAlterada { get; private set; }
+
         private void AtualizaTirinha(object sender, NavigationEventArgs args)
         {
             if (args.Uri.ToString().Contains("TirinhaView.xaml"))
             {
-                var tirinha = (Tirinha) IsolatedStorageSettings.ApplicationSettings["TirinhaCorrent"];
-                Tirinha = tirinha;
-                if (!vdpContext.TirinhasLidas.Any(x => x.Link == tirinha.Link))
+                PortraitLayoutVisible = Visibility.Visible;
+                LandscapeLayoutVisible = Visibility.Collapsed;
+
+                Tirinha = (Tirinha)IsolatedStorageSettings.ApplicationSettings["TirinhaCorrent"];
+                if (!vdpContext.TirinhasLidas.Any(tirinhaLida => tirinhaLida.Link == Tirinha.Link))
                 {
-                    vdpContext.TirinhasLidas.InsertOnSubmit(new TirinhaLida {Link = tirinha.Link});
+                    vdpContext.TirinhasLidas.InsertOnSubmit(new TirinhaLida { Link = Tirinha.Link });
                     vdpContext.SubmitChanges();
                 }
             }

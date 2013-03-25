@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<Application xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-             xmlns:Converters="clr-namespace:VidaDeProgramador.Converters"
+﻿<Application
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
              xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="VidaDeProgramador.App"
@@ -11,11 +8,10 @@
              xmlns:vm="clr-namespace:VidaDeProgramador.ViewModel" mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
-            <Converters:TirinhaToImage p8:Key="TirinhaToImage" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml" />
-            <DataTemplate p8:Key="TirinhasThumb" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml">
-                <toolkit:HubTile Source="{Binding ., Converter={StaticResource TirinhaToImage}}" Size="Medium" Margin="5" />
+            <DataTemplate x:Key="TirinhasThumb">
+                <Image Source="{Binding BitmapImagem}" Width="200" Height="200" Margin="5"/>
             </DataTemplate>
-            <ItemsPanelTemplate p8:Key="ItemPanelWrapPanel" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml">
+            <ItemsPanelTemplate x:Key="ItemPanelWrapPanel">
                 <toolkit:WrapPanel Orientation="Horizontal" VirtualizingStackPanel.VirtualizationMode="Recycling" />
             </ItemsPanelTemplate>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />

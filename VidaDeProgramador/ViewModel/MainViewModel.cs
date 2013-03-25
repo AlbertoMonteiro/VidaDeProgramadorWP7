@@ -37,6 +37,7 @@ namespace VidaDeProgramador.ViewModel
                     IsolatedStorageSettings.ApplicationSettings.Clear();
                     IsolatedStorageSettings.ApplicationSettings.Add("TirinhaCorrent", tirinha);
                     navigationService.NavigateTo("/TirinhaView.xaml");
+                    SynchronizationContext.Current.Post(state => tirinha.Nova = false,null);
                 });
                 MaisTirinhas = new RelayCommand(() => LoadData());
             }
