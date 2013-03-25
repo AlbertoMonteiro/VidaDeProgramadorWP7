@@ -13,8 +13,7 @@
         <ResourceDictionary>
             <Converters:TirinhaToImage p8:Key="TirinhaToImage" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml" />
             <DataTemplate p8:Key="TirinhasThumb" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml">
-                <toolkit:HubTile Source="{Binding ., Converter={StaticResource TirinhaToImage}}" Size="Medium"
-                                 Margin="5" />
+                <toolkit:HubTile Source="{Binding ., Converter={StaticResource TirinhaToImage}}" Size="Medium" Margin="5" />
             </DataTemplate>
             <ItemsPanelTemplate p8:Key="ItemPanelWrapPanel" xmlns:p8="http://schemas.microsoft.com/winfx/2006/xaml">
                 <toolkit:WrapPanel Orientation="Horizontal" VirtualizingStackPanel.VirtualizationMode="Recycling" />

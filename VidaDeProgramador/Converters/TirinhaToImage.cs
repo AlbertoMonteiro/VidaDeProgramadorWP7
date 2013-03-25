@@ -31,7 +31,6 @@ namespace VidaDeProgramador.Converters
                 const int novoTamanho = 34;
 
                 var tirinhaImage = new WriteableBitmap(bitmapImage);
-                var novo = new WriteableBitmap(novoImage);
                 var tile = new WriteableBitmap(tileTamanho, tileTamanho);
                 var titulo = new WriteableBitmap(tileTamanho, tileTamanho);
 
@@ -39,13 +38,19 @@ namespace VidaDeProgramador.Converters
 
                 var rect = new Rect(0.0, 0.0, tileTamanho, tileTamanho);
 
-                int x = tileTamanho - novoTamanho - 1;
-
-                var novoDestiny = new Rect(0, 0, novoTamanho, novoTamanho);
-                var novoPosition = new Rect(x, 1, novoTamanho, novoTamanho);
-
                 tile.Blit(rect, tirinhaImage, rect, WriteableBitmapExtensions.BlendMode.None);
-                tile.Blit(novoPosition, novo, novoDestiny, WriteableBitmapExtensions.BlendMode.Alpha);
+
+                if (tirinha.Nova)
+                {
+                    var novo = new WriteableBitmap(novoImage);
+
+                    int x = tileTamanho - novoTamanho - 1;
+
+                    var novoDestiny = new Rect(0, 0, novoTamanho, novoTamanho);
+                    var novoPosition = new Rect(x, 1, novoTamanho, novoTamanho);
+
+                    tile.Blit(novoPosition, novo, novoDestiny, WriteableBitmapExtensions.BlendMode.Alpha); 
+                }
 
                 var txt1 = new TextBlock
                 {

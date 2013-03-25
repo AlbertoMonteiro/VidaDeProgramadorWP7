@@ -7,6 +7,8 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Behaviors="clr-namespace:AlbertoMonteiroWP7Tools.Behaviors;assembly=AlbertoMonteiroWP7Tools"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -14,21 +16,29 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     DataContext="{Binding Tirinha, Source={StaticResource Locator}}"
     shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar"
+                                            Click="ShareClick" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
         <controls:Pivot Title="{Binding Tirinha.Title}">
+            <i:Interaction.Behaviors>
+                <Behaviors:TrackablePivotBehavior SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+            </i:Interaction.Behaviors>
             <!--Pivot item one-->
             <controls:PivotItem Header="tirinha">
-                <Image Source="{Binding Tirinha.Image}" />
+                <Image Source="{Binding Tirinha.Image}" VerticalAlignment="Top" />
             </controls:PivotItem>
-
-            <!--Pivot item two-->
             <controls:PivotItem Header="descrição">
-                <TextBlock TextWrapping="Wrap" Text="{Binding Tirinha.Body}" />
+                <ScrollViewer>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Tirinha.Body}" Height="643" Width="420" />
+                </ScrollViewer>
             </controls:PivotItem>
-
             <controls:PivotItem Header="comentários">
                 <Grid />
             </controls:PivotItem>

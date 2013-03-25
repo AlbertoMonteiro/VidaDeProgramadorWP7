@@ -1,18 +1,27 @@
-﻿using System.Windows;
+﻿using System.IO.IsolatedStorage;
+using System.Linq;
+using System.Windows;
+using System.Windows.Navigation;
 using GalaSoft.MvvmLight;
+using VidaDeProgramador.Persistence;
 using VidaDeProgramador.WordpressApi;
+using NavigationService = AlbertoMonteiroWP7Tools.Navigation.NavigationService;
 
 namespace VidaDeProgramador.ViewModel
 {
     public class TirinhaViewModel : ViewModelBase
     {
-        private Visibility _landscapeLayoutVisible;
-        private Visibility _portraitLayoutVisible;
-        private Tirinha _tirinha;
+        private readonly NavigationService navigationService;
+        private readonly VDPContext vdpContext;
+        private Visibility landscapeLayoutVisible;
+        private Visibility portraitLayoutVisible;
+        private Tirinha tirinha;
+        private int selectedIndex;
 
-        public TirinhaViewModel()
+        public TirinhaViewModel(NavigationService navigationService)
         {
-            if (IsInDesignMode || IsInDesignModeStatic)
+            this.navigationService = navigationService;
+            if (IsInDesignMode)
             {
                 Tirinha = new Tirinha
                 {
@@ -30,35 +39,69 @@ Camiseta: Vá pedir aulas ao Divasca!",
                     Title = "Aulas"
                 };
             }
+            else
+            {
+                vdpContext = new VDPContext();
+                this.navigationService.Navigated += AtualizaTirinha;
+                PropertyChanged+=(sender, args) =>
+                {
+                    if (args.PropertyName == "SelectedIndex" && SelectedIndex == 2)
+                        MessageBox.Show("Carregar comentarios");
+                };
+            }
         }
 
         public Visibility LandscapeLayoutVisible
         {
-            get { return _landscapeLayoutVisible; }
+            get { return landscapeLayoutVisible; }
             set
             {
-                _landscapeLayoutVisible = value;
+                landscapeLayoutVisible = value;
                 RaisePropertyChanged("LandscapeLayoutVisible");
             }
         }
 
         public Visibility PortraitLayoutVisible
         {
-            get { return _portraitLayoutVisible; }
+            get { return portraitLayoutVisible; }
             set
             {
-                _portraitLayoutVisible = value;
+                portraitLayoutVisible = value;
                 RaisePropertyChanged("PortraitLayoutVisible");
             }
         }
 
         public Tirinha Tirinha
         {
-            get { return _tirinha; }
+            get { return tirinha; }
             set
             {
-                _tirinha = value;
+                tirinha = value;
                 RaisePropertyChanged("Tirinha");
+            }
+        }
+
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set
+            {
+                selectedIndex = value;
+                RaisePropertyChanged("SelectedIndex");
+            }
+        }
+
+        private void AtualizaTirinha(object sender, NavigationEventArgs args)
+        {
+            if (args.Uri.ToString().Contains("TirinhaView.xaml"))
+            {
+                var tirinha = (Tirinha) IsolatedStorageSettings.ApplicationSettings["TirinhaCorrent"];
+                Tirinha = tirinha;
+                if (!vdpContext.TirinhasLidas.Any(x => x.Link == tirinha.Link))
+                {
+                    vdpContext.TirinhasLidas.InsertOnSubmit(new TirinhaLida {Link = tirinha.Link});
+                    vdpContext.SubmitChanges();
+                }
             }
         }
     }

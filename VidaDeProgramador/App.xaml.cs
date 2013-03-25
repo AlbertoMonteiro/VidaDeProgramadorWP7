@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using AlbertoMonteiroWP7Tools.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using VidaDeProgramador.Utils;
 using VidaDeProgramador.ViewModel;
 
 namespace VidaDeProgramador
@@ -44,22 +45,6 @@ namespace VidaDeProgramador
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-            }
-        }
-
-        /// <summary>
-        ///     A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel ViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (viewModel == null)
-                    viewModel = new MainViewModel();
-
-                return viewModel;
             }
         }
 
@@ -113,6 +98,9 @@ namespace VidaDeProgramador
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+            var messageBoxResult = MessageBox.Show("Deseja enviar o erro ao desenvolvedor da aplicação?", "Vida de Programador", MessageBoxButton.OKCancel);
+            if (messageBoxResult == MessageBoxResult.OK)
+                CurrentTasks.Current.SendMail(string.Format("Exception message: {0}\nStacktrace: {1}", e.ExceptionObject.InnerException, e.ExceptionObject.StackTrace));
         }
 
         #region Phone application initialization

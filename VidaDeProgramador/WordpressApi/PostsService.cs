@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using AlbertoMonteiroWP7Tools.Controls;
 using AlbertoMonteiroWP7Tools.Extensions;
+using VidaDeProgramador.Persistence;
 
 namespace VidaDeProgramador.WordpressApi
 {
     public class PostsService
     {
+        private readonly VDPContext vdpContext;
+
+        public PostsService(VDPContext vdpContext)
+        {
+            this.vdpContext = vdpContext;
+        }
+
         private const string URL = "http://vidadeprogramador.com.br/category/tirinhas/feed/?paged={0}";
         private const string IMAGEM = @"<img src=\""(?<imagem>[\w:/.-]+)\""";
         private const string CORPO = @"<div class=""transcription"">(?<corpo>(.|\n)+)</div>";
@@ -58,6 +66,7 @@ namespace VidaDeProgramador.WordpressApi
                         LinkComentarios = item.Element(XName.Get("commentRss", wfw.NamespaceName)).Value,
                         TotalComentarios = int.Parse(item.Element(XName.Get("comments", slash.NamespaceName)).Value)
                     };
+                    tirinha.Nova = !vdpContext.TirinhasLidas.Any(x => x.Link == tirinha.Link);
                     tirinhas.Add(tirinha);
                 }
                 return tirinhas;

@@ -4,6 +4,11 @@ namespace VidaDeProgramador.WordpressApi
 {
     public class Tirinha
     {
+        public Tirinha()
+        {
+            Nova = true;
+        }
+
         public string Title { get; set; }
         public string Image { get; set; }
         public string Body { get; set; }
@@ -11,5 +16,6 @@ namespace VidaDeProgramador.WordpressApi
         public DateTime PublicadoEm { get; set; }
         public string LinkComentarios { get; set; }
         public int TotalComentarios { get; set; }
+        public bool Nova { get; set; }
     }
 }

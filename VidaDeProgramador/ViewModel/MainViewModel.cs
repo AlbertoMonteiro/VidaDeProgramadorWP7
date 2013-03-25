@@ -1,40 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 using System.Threading;
 using System.Windows;
+using AlbertoMonteiroWP7Tools.Navigation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using VidaDeProgramador.Persistence;
 using VidaDeProgramador.WordpressApi;
 
 namespace VidaDeProgramador.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly PostsService _postsService;
-        private bool _loadingData;
-        private RelayCommand _maisTirinhas;
-        private int _page;
-        private int _position;
+        private readonly NavigationService navigationService;
+        private readonly PostsService postsService;
+        private bool loadingData;
+        private RelayCommand maisTirinhas;
+        private int page;
+        private int position;
 
-        private int _selectedIndex;
-        private Tirinha _tirinha;
-        private ObservableCollection<Tirinha> _tirinhas;
+        private Tirinha tirinha;
+        private ObservableCollection<Tirinha> tirinhas;
 
-        public MainViewModel()
+        public MainViewModel(NavigationService navigationService)
         {
+            this.navigationService = navigationService;
             Tirinhas = new ObservableCollection<Tirinha>();
-            _postsService = new PostsService();
-            if (IsInDesignMode)
-                Tirinha = new Tirinha {Title = "Teste de tirinha grande"};
-            else
+            postsService = new PostsService(new VDPContext());
+            if (!IsInDesignMode)
             {
                 SynchronizationContext.Current.Post(state => LoadData(true), null);
-                TirinhaSelected = new RelayCommand<Tirinha>(post =>
+                TirinhaSelected = new RelayCommand<Tirinha>(tirinha =>
                 {
-                    Tirinha = post;
-                    SelectedIndex = 1;
-                    Position = 0;
+                    IsolatedStorageSettings.ApplicationSettings.Clear();
+                    IsolatedStorageSettings.ApplicationSettings.Add("TirinhaCorrent", tirinha);
+                    navigationService.NavigateTo("/TirinhaView.xaml");
                 });
                 MaisTirinhas = new RelayCommand(() => LoadData());
             }
@@ -42,52 +44,32 @@ namespace VidaDeProgramador.ViewModel
 
         public RelayCommand<Tirinha> TirinhaSelected { get; set; }
 
-        public Tirinha Tirinha
-        {
-            get { return _tirinha; }
-            set
-            {
-                _tirinha = value;
-                RaisePropertyChanged("Tirinha");
-            }
-        }
-
         public ObservableCollection<Tirinha> Tirinhas
         {
-            get { return _tirinhas; }
+            get { return tirinhas; }
             set
             {
-                _tirinhas = value;
+                tirinhas = value;
                 RaisePropertyChanged("Tirinhas");
             }
         }
 
         public RelayCommand MaisTirinhas
         {
-            get { return _maisTirinhas; }
+            get { return maisTirinhas; }
             set
             {
-                _maisTirinhas = value;
+                maisTirinhas = value;
                 RaisePropertyChanged("MaisTirinhas");
-            }
-        }
-
-        public int SelectedIndex
-        {
-            get { return _selectedIndex; }
-            set
-            {
-                _selectedIndex = value;
-                RaisePropertyChanged("SelectedIndex");
             }
         }
 
         public int Position
         {
-            get { return _position; }
+            get { return position; }
             set
             {
-                _position = value;
+                position = value;
                 RaisePropertyChanged("Position");
             }
         }
@@ -96,12 +78,12 @@ namespace VidaDeProgramador.ViewModel
         {
             try
             {
-                if (!_loadingData)
+                if (!loadingData)
                 {
-                    _loadingData = true;
+                    loadingData = true;
                     if (primeiraPagina)
-                        _page = 0;
-                    IEnumerable<Tirinha> posts = await _postsService.GetPosts(++_page);
+                        page = 0;
+                    IEnumerable<Tirinha> posts = await postsService.GetPosts(++page);
                     foreach (Tirinha post in posts)
                         Tirinhas.Add(post);
                 }
@@ -112,7 +94,7 @@ namespace VidaDeProgramador.ViewModel
             }
             finally
             {
-                _loadingData = false;
+                loadingData = false;
             }
         }
     }

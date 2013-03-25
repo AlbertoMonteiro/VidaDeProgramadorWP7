@@ -1,37 +1,46 @@
-using System.Diagnostics.CodeAnalysis;
+using AlbertoMonteiroWP7Tools.Navigation;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
+using Microsoft.Practices.ServiceLocation;
 
 namespace VidaDeProgramador.ViewModel
 {
     public class ViewModelLocator
     {
-        private static MainViewModel _main;
-        private static TirinhaViewModel _tirinha;
+        private readonly NavigationService navigationService;
 
         public ViewModelLocator()
         {
+            navigationService = new NavigationService();
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                // Create design time services and viewmodels
+                
             }
             else
             {
-                // Create run time services and view models
+                
             }
-            _main = new MainViewModel();
-            _tirinha = new TirinhaViewModel();
+
+            SimpleIoc.Default.Register(() => new MainViewModel(navigationService));
+            SimpleIoc.Default.Register(() => new TirinhaViewModel(navigationService));
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main
         {
-            get { return _main; }
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This non-static member is needed for data binding purposes.")]
         public TirinhaViewModel Tirinha
         {
-            get { return _tirinha; }
+            get
+            {
+                return ServiceLocator.Current.GetInstance<TirinhaViewModel>();
+            }
         }
     }
 }
