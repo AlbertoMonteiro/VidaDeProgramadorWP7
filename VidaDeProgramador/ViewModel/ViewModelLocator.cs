@@ -25,19 +25,13 @@ namespace VidaDeProgramador.ViewModel
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This non-static member is needed for data binding purposes.")]
         public MainViewModel Main
         {
-            get
-            {
-                return _main;
-            }
+            get { return _main; }
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "This non-static member is needed for data binding purposes.")]
         public TirinhaViewModel Tirinha
         {
-            get
-            {
-                return _tirinha;
-            }
+            get { return _tirinha; }
         }
     }
 }

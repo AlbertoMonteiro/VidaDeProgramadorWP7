@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows;
@@ -11,14 +12,14 @@ namespace VidaDeProgramador.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly PostsService _postsService;
-        private ObservableCollection<Tirinha> _tirinhas;
-        private RelayCommand  _maisTirinhas;
+        private bool _loadingData;
+        private RelayCommand _maisTirinhas;
         private int _page;
         private int _position;
 
         private int _selectedIndex;
         private Tirinha _tirinha;
-        private bool _loadingData;
+        private ObservableCollection<Tirinha> _tirinhas;
 
         public MainViewModel()
         {
@@ -100,8 +101,8 @@ namespace VidaDeProgramador.ViewModel
                     _loadingData = true;
                     if (primeiraPagina)
                         _page = 0;
-                    var posts = await _postsService.GetPosts(++_page);
-                    foreach (var post in posts)
+                    IEnumerable<Tirinha> posts = await _postsService.GetPosts(++_page);
+                    foreach (Tirinha post in posts)
                         Tirinhas.Add(post);
                 }
             }

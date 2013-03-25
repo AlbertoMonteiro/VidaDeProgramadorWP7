@@ -6,6 +6,10 @@ namespace VidaDeProgramador.ViewModel
 {
     public class TirinhaViewModel : ViewModelBase
     {
+        private Visibility _landscapeLayoutVisible;
+        private Visibility _portraitLayoutVisible;
+        private Tirinha _tirinha;
+
         public TirinhaViewModel()
         {
             if (IsInDesignMode || IsInDesignModeStatic)
@@ -25,12 +29,8 @@ Camiseta: Vá pedir aulas ao Divasca!",
                     Link = "http://vidadeprogramador.com.br/2013/03/22/aulas/",
                     Title = "Aulas"
                 };
-            }    
+            }
         }
-
-        private Visibility _landscapeLayoutVisible;
-        private Visibility _portraitLayoutVisible;
-        private Tirinha _tirinha;
 
         public Visibility LandscapeLayoutVisible
         {

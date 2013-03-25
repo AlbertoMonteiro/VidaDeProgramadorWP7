@@ -1,26 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{ceb416f9-1902-4d97-89fc-332515c11f6e}" Title="VidaDeProgramador" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="VidaDeProgramador author" Description="Sample description" Publisher="VidaDeProgramador">
+  <App xmlns="" ProductID="{ceb416f9-1902-4d97-89fc-332515c11f6e}" Title="VidaDeProgramador" RuntimeType="Silverlight" Version="1.3.0.0" Genre="apps.normal" Author="Alberto Monteiro" Description="Esta é a versão gratuita do leitor de tirinhas do site http://www.vidadeprogramador.com.br.&#xD;&#xA;Divirta-se lendo as tirinhas de forma diferente da tradicional.&#xD;&#xA;Navegue pelas tirinhas disponíveis e divirta-se com as histórias demonstradas dia a dia." Publisher="Alberto Monteiro" BitsPerPixel="16">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_GAMERSERVICES"/>
-      <Capability Name="ID_CAP_IDENTITY_DEVICE"/>
-      <Capability Name="ID_CAP_IDENTITY_USER"/>
-      <Capability Name="ID_CAP_LOCATION"/>
-      <Capability Name="ID_CAP_MEDIALIB"/>
-      <Capability Name="ID_CAP_MICROPHONE"/>
-      <Capability Name="ID_CAP_NETWORKING"/>
-      <Capability Name="ID_CAP_PHONEDIALER"/>
-      <Capability Name="ID_CAP_PUSH_NOTIFICATION"/>
-      <Capability Name="ID_CAP_SENSORS"/>
-      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
-      <Capability Name="ID_CAP_ISV_CAMERA"/>
-      <Capability Name="ID_CAP_CONTACTS"/>
-      <Capability Name="ID_CAP_APPOINTMENTS"/>
+      <Capability Name="ID_CAP_NETWORKING" />
     </Capabilities>
     <Tasks>
-      <DefaultTask  Name ="_default" NavigationPage="MainPage.xaml"/>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="VidaDeProgramadorToken" TaskName="_default">

@@ -24,7 +24,7 @@ namespace VidaDeProgramador.Converters
             {
                 CreateOptions = BitmapCreateOptions.None
             };
-            
+
             bitmapImage.ImageOpened += (o, args) =>
             {
                 const int tileTamanho = 200;
@@ -39,7 +39,7 @@ namespace VidaDeProgramador.Converters
 
                 var rect = new Rect(0.0, 0.0, tileTamanho, tileTamanho);
 
-                var x = tileTamanho - novoTamanho - 1;
+                int x = tileTamanho - novoTamanho - 1;
 
                 var novoDestiny = new Rect(0, 0, novoTamanho, novoTamanho);
                 var novoPosition = new Rect(x, 1, novoTamanho, novoTamanho);
@@ -50,7 +50,7 @@ namespace VidaDeProgramador.Converters
                 var txt1 = new TextBlock
                 {
                     Text = tirinha.Title,
-                    Width = tileTamanho * 0.80,
+                    Width = tileTamanho*0.80,
                     TextWrapping = TextWrapping.Wrap,
                     TextAlignment = TextAlignment.Center,
                     FontSize = 18,
@@ -58,10 +58,10 @@ namespace VidaDeProgramador.Converters
                     Foreground = new SolidColorBrush(Colors.White)
                 };
 
-                const int xDe = (int)(tileTamanho * 0.10);
-                int yDe = tileTamanho - ((int)txt1.ActualHeight) - 10;
+                const int xDe = (int) (tileTamanho*0.10);
+                int yDe = tileTamanho - ((int) txt1.ActualHeight) - 10;
 
-                const int xAte = (int)(tileTamanho * 0.90);
+                const int xAte = (int) (tileTamanho*0.90);
                 const int yAte = tileTamanho - 10;
 
                 titulo.FillRectangle(xDe, yDe, xAte, yAte, Color.FromArgb(204, 0, 71, 171));
@@ -74,7 +74,7 @@ namespace VidaDeProgramador.Converters
                 tile.Blit(new Rect(xDe, yDe, xAte - xDe, yAte - yDe), bitmap, new Rect(0, 0, xAte - xDe, yAte - yDe), WriteableBitmapExtensions.BlendMode.Alpha);
 
                 var ms = new MemoryStream();
-                tile.SaveJpeg(ms, tileTamanho, tileTamanho,0,100);
+                tile.SaveJpeg(ms, tileTamanho, tileTamanho, 0, 100);
                 ms.Seek(0, SeekOrigin.Begin);
                 bitmapImage.SetSource(ms);
             };

@@ -21,8 +21,8 @@ namespace VidaDeProgramador
         private const string formato = "Lendo a tirinha {0} do @programadorreal via VidaDeProgramador para #WP7 {1}";
         private double actualHeight;
         private double actualWidth;
-        private Tirinha tirinha;
         private HttpNotificationChannel canalPush;
+        private Tirinha tirinha;
 
         public MainPage()
         {
@@ -56,7 +56,8 @@ namespace VidaDeProgramador
             try
             {
                 CurrentTasks.Current.Share(string.Format(formato, tirinha.Title, tirinha.Link));
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 SendExceptionMain(ex);
             }
@@ -77,7 +78,8 @@ namespace VidaDeProgramador
                 double d = e.DistanceRatio - distanceRatio;
                 renderTransform.ScaleX = Math.Min(renderTransform.ScaleX + d, 2);
                 renderTransform.ScaleY = Math.Min(renderTransform.ScaleY + d, 2);
-            } else
+            }
+            else
             {
                 renderTransform.ScaleX = Math.Max(renderTransform.ScaleX - (1 - e.DistanceRatio), 1);
                 renderTransform.ScaleY = Math.Max(renderTransform.ScaleY - (1 - e.DistanceRatio), 1);
@@ -119,10 +121,12 @@ namespace VidaDeProgramador
             try
             {
                 Dispatcher.BeginInvoke(() => CurrentTasks.Current.Share("Gosta das tirinhas do Vida de Programador? Acompanhe usando a app p/ wp7 do @AIbertoMonteiro http://bit.ly/HrgRp1"));
-            } catch (InvalidOperationException ex)
+            }
+            catch (InvalidOperationException ex)
             {
                 SendExceptionMain(ex);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 SendExceptionMain(ex);
             }
@@ -137,7 +141,7 @@ namespace VidaDeProgramador
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ConfiguracaoPush();
+            //ConfiguracaoPush();
             base.OnNavigatedTo(e);
         }
 
@@ -160,16 +164,17 @@ namespace VidaDeProgramador
                 canalPush.BindToShellTile();
                 canalPush.BindToShellToast();
 
-                if (canalPush.ChannelUri != null) 
+                if (canalPush.ChannelUri != null)
                     Debug.WriteLine(canalPush.ChannelUri.ToString());
-            } else
+            }
+            else
             {
                 canalPush.ChannelUriUpdated +=
                     canalPush_ChannelUriUpdated;
                 canalPush.ErrorOccurred +=
                     canalPush_ErrorOccurred;
 
-                if (canalPush.ChannelUri != null) 
+                if (canalPush.ChannelUri != null)
                     Debug.WriteLine(canalPush.ChannelUri.ToString());
             }
         }

@@ -17,9 +17,12 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="recomende" Click="RecomendacaoClick" />
             </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas" Text="Carregar" x:Name="Refresh" />
-            <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar" Click="ShareClick" />
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="Avalie" Click="AvaliarClick" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.refresh.rest.png" Click="LoadTirinhas"
+                                            Text="Carregar" x:Name="Refresh" />
+            <shell:ApplicationBarIconButton x:Name="Tweetar" IconUri="/icons/appbar.share.rest.png" Text="Tweetar"
+                                            Click="ShareClick" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.questionmark.rest.png" Text="Avalie"
+                                            Click="AvaliarClick" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -42,17 +45,20 @@
             </controls:PivotItem>
             <controls:PivotItem Header="Sobre">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                    <Image Source="http://2.gravatar.com/avatar/8eee03bb8248725e52010b1689a10bf4?size=200" Width="200"
+                           VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
                         <Image.Projection>
                             <PlaneProjection RotationX="15" RotationY="-20" RotationZ="1" />
                         </Image.Projection>
                     </Image>
                     <StackPanel>
-                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap" TextTrimming="WordEllipsis">
+                        <TextBlock FontSize="21.333" HorizontalAlignment="Left" TextWrapping="Wrap"
+                                   TextTrimming="WordEllipsis">
                             <Run Text="Autor: Alberto Monteiro" />
                         </TextBlock>
                         <HyperlinkButton NavigateUri="http://albertomonteiro.net.br" TargetName="_blank" Content="Site" />
-                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank" Content="Twitter" />
+                        <HyperlinkButton NavigateUri="http://twitter.com/AibertoMonteiro" TargetName="_blank"
+                                         Content="Twitter" />
                     </StackPanel>
                 </StackPanel>
             </controls:PivotItem>

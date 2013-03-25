@@ -139,8 +139,18 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Properties\AppManifest.xml" />
-    <None Include="Properties\WMAppManifest.xml" />
+    <None Include="Properties\AppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="VidaDeProgramador_2013_03_24_21_15_48.sap" />
+    <None Include="VidaDeProgramador_2013_03_24_21_16_40.sap" />
+    <None Include="VidaDeProgramador_2013_03_24_21_17_46.sap" />
+    <None Include="VidaDeProgramador_2013_03_24_21_19_22.sap" />
+    <None Include="VidaDeProgramador_2013_03_24_21_20_26.sap" />
+    <None Include="VidaDeProgramador_2013_03_24_21_21_47.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -158,9 +168,7 @@
     <Content Include="icons\appbar.share.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MVVMLight.Nuget.Readme.txt" />
     <Content Include="novo.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
