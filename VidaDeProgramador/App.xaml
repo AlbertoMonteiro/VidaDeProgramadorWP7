@@ -5,9 +5,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="VidaDeProgramador.App"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:VidaDeProgramador.ViewModel" mc:Ignorable="d">
+             xmlns:vm="clr-namespace:VidaDeProgramador.ViewModel"
+    xmlns:converters="clr-namespace:VidaDeProgramador.Converters" mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
+            <converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
             <DataTemplate x:Key="TirinhasThumb">
                 <Image Source="{Binding BitmapImagem}" Width="200" Height="200" Margin="5"/>
             </DataTemplate>

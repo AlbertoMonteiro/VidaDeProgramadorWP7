@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Behaviors="clr-namespace:AlbertoMonteiroWP7Tools.Behaviors;assembly=AlbertoMonteiroWP7Tools"
-    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" x:Name="phoneApplicationPage"
+    x:Name="phoneApplicationPage"
     x:Class="VidaDeProgramador.TirinhaView"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -33,7 +33,10 @@
             </i:Interaction.Behaviors>
             <!--Pivot item one-->
             <controls:PivotItem Header="tirinha">
-                <Image Source="{Binding Tirinha.Image}" VerticalAlignment="Top" />
+                <StackPanel Orientation="Vertical">
+            		<TextBlock Text="{Binding Tirinha.PublicadoEm, Converter={StaticResource RelativeTimeConverter}, StringFormat=Publicado \{0\}}" TextAlignment="Center"/>
+            		<Image Source="{Binding Tirinha.Image}" VerticalAlignment="Top" />
+            	</StackPanel>
             </controls:PivotItem>
             <controls:PivotItem Header="descrição">
                 <ScrollViewer>
