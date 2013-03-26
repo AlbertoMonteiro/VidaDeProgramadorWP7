@@ -5,14 +5,11 @@ using AlbertoMonteiroWP7Tools.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using VidaDeProgramador.Utils;
-using VidaDeProgramador.ViewModel;
 
 namespace VidaDeProgramador
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel;
-
         /// <summary>
         ///     Constructor for the Application object.
         /// </summary>

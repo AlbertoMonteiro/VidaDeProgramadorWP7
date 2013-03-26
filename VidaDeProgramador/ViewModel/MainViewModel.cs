@@ -14,19 +14,16 @@ namespace VidaDeProgramador.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly NavigationService navigationService;
         private readonly PostsService postsService;
         private bool loadingData;
         private RelayCommand maisTirinhas;
         private int page;
         private int position;
 
-        private Tirinha tirinha;
         private ObservableCollection<Tirinha> tirinhas;
 
         public MainViewModel(NavigationService navigationService)
         {
-            this.navigationService = navigationService;
             Tirinhas = new ObservableCollection<Tirinha>();
             postsService = new PostsService(new VDPContext());
             if (!IsInDesignMode)
