@@ -112,8 +112,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Persistence\TirinhaLida.cs" />
-    <Compile Include="Persistence\VDPContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -124,11 +122,10 @@
       <DependentUpon>TirinhaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\CurrentTasks.cs" />
+    <Compile Include="ViewModel\TirinhaModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\TirinhaViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="WordpressApi\Tirinha.cs" />
-    <Compile Include="WordpressApi\PostsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -170,9 +167,7 @@
     <Content Include="icons\appbar.share.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MVVMLight.Nuget.Readme.txt" />
     <Content Include="novo.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -184,6 +179,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VidaDeProgramador.Schedule\VidaDeProgramador.Schedule.csproj">
+      <Project>{74E12B18-DBE8-4B69-8894-BC0A53F9427B}</Project>
+      <Name>VidaDeProgramador.Schedule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VidaDeProgramadorWP7.Common\VidaDeProgramador.Common.csproj">
+      <Project>{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}</Project>
+      <Name>VidaDeProgramador.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

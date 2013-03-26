@@ -1,6 +1,6 @@
 ﻿using System.Data.Linq.Mapping;
 
-namespace VidaDeProgramador.Persistence
+namespace VidaDeProgramador.Common.Persistence
 {
     [Table]
     public class TirinhaLida

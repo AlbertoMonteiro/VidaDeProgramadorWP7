@@ -2,7 +2,7 @@
   <SmallAppTile>ApplicationListImage.png</SmallAppTile>
   <LargeAppTile>Background.png</LargeAppTile>
   <PCAppTile>MarketplaceImage.png</PCAppTile>
-  <ScreenShots>Tirinhas.png;;TirinhaLendo.png;TirinhaLendo2.png;;;;;</ScreenShots>
-  <ScreenShotsWXGA>;;;;;;;;</ScreenShotsWXGA>
-  <ScreenShots720P>;;;;;;;;</ScreenShots720P>
+  <ScreenShots>1.png;2.png;3.png;4.png;5.png;6.png;;;</ScreenShots>
+  <ScreenShotsWXGA>WXGA1.png;WXGA2.png;WXGA3.png;WXGA4.png;WXGA5.png;WXGA6.png;;;</ScreenShotsWXGA>
+  <ScreenShots720P>720P1.png;720P2.png;720P3.png;720P4.png;720P5.png;720P6.png;;;</ScreenShots720P>
 </MarketplaceDetails>

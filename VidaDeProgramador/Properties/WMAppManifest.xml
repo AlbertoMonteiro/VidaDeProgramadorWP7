@@ -7,6 +7,9 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="VidaDeProgramador.Schedule" Source="VidaDeProgramador.Schedule" Type="VidaDeProgramador.Schedule.ScheduledAgent" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="VidaDeProgramadorToken" TaskName="_default">

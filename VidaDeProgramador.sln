@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F487E7
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidaDeProgramador.Schedule", "VidaDeProgramador.Schedule\VidaDeProgramador.Schedule.csproj", "{74E12B18-DBE8-4B69-8894-BC0A53F9427B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VidaDeProgramador.Common", "VidaDeProgramadorWP7.Common\VidaDeProgramador.Common.csproj", "{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +26,14 @@ Global
 		{C3A499B3-6B56-4641-A15B-6439066CBDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A499B3-6B56-4641-A15B-6439066CBDEE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3A499B3-6B56-4641-A15B-6439066CBDEE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{74E12B18-DBE8-4B69-8894-BC0A53F9427B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E12B18-DBE8-4B69-8894-BC0A53F9427B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E12B18-DBE8-4B69-8894-BC0A53F9427B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E12B18-DBE8-4B69-8894-BC0A53F9427B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

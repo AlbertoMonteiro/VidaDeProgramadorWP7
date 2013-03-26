@@ -1,21 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:converters="clr-namespace:VidaDeProgramador.Converters" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="VidaDeProgramador.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:VidaDeProgramador.ViewModel" mc:Ignorable="d">
-  <Application.Resources>
-    <ResourceDictionary>
-      <converters:RelativeTimeConverter p7:Key="RelativeTimeConverter" xmlns:p7="http://schemas.microsoft.com/winfx/2006/xaml" />
-      <DataTemplate p7:Key="TirinhasThumb" xmlns:p7="http://schemas.microsoft.com/winfx/2006/xaml">
-        <Image Source="{Binding BitmapImagem}" Width="200" Height="200" Margin="5" />
-      </DataTemplate>
-      <ItemsPanelTemplate p7:Key="ItemPanelWrapPanel" xmlns:p7="http://schemas.microsoft.com/winfx/2006/xaml">
-        <toolkit:WrapPanel Orientation="Horizontal" VirtualizingStackPanel.VirtualizationMode="Recycling" />
-      </ItemsPanelTemplate>
-      <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-      <ResourceDictionary.MergedDictionaries></ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Application.Resources>
-  <!--Application Resources-->
-  <Application.ApplicationLifetimeObjects>
-    <!--Required object that handles lifetime events for the application-->
-    <shell:PhoneApplicationService Launching="Application_Launching" Closing="Application_Closing" Activated="Application_Activated" Deactivated="Application_Deactivated" />
-  </Application.ApplicationLifetimeObjects>
+﻿<Application xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+             xmlns:converters="clr-namespace:VidaDeProgramador.Converters"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="VidaDeProgramador.App"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:VidaDeProgramador.ViewModel" mc:Ignorable="d">
+    <Application.Resources>
+        <ResourceDictionary>
+            <converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
+            <DataTemplate x:Key="TirinhasThumb">
+                <Image Source="{Binding BitmapImagem}" Width="200" Height="200" Margin="5" />
+            </DataTemplate>
+            <ItemsPanelTemplate x:Key="ItemPanelWrapPanel">
+                <toolkit:WrapPanel Orientation="Horizontal" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+            </ItemsPanelTemplate>
+            <vm:ViewModelLocator x:Name="Locator"/>
+            <ResourceDictionary.MergedDictionaries></ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    <!--Application Resources-->
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService Launching="Application_Launching" Closing="Application_Closing"
+                                       Activated="Application_Activated" Deactivated="Application_Deactivated" />
+    </Application.ApplicationLifetimeObjects>
 </Application>

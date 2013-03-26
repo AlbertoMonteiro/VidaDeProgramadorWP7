@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 using AlbertoMonteiroWP7Tools.Controls;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using VidaDeProgramador.Utils;
 
@@ -56,6 +58,20 @@ namespace VidaDeProgramador
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             GlobalLoading.Instance.Initialize(RootFrame);
+            string periodicTaskName = "NovasTirinhas";
+            PeriodicTask periodicTask;
+            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
+
+            if (periodicTask != null)
+                ScheduledActionService.Remove(periodicTaskName);
+
+            periodicTask = new PeriodicTask(periodicTaskName);
+            periodicTask.Description = "Verifica se existe novas tirinhas";
+            ScheduledActionService.Add(periodicTask);
+
+#if(DEBUG)
+            ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(30));
+#endif
         }
 
         // Code to execute when the application is activated (brought to foreground)

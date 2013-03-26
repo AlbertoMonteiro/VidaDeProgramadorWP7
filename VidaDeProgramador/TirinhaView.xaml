@@ -33,10 +33,18 @@
             </i:Interaction.Behaviors>
             <!--Pivot item one-->
             <controls:PivotItem Header="tirinha">
-                <StackPanel Orientation="Vertical">
-            		<TextBlock Text="{Binding Tirinha.PublicadoEm, Converter={StaticResource RelativeTimeConverter}, StringFormat=Publicado \{0\}}" TextAlignment="Center"/>
-            		<Image Source="{Binding Tirinha.Image}" VerticalAlignment="Top" />
-            	</StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Tirinha.PublicadoEm, Converter={StaticResource RelativeTimeConverter}, StringFormat=Publicado \{0\}}" TextAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Gire o smartphone para ver maior" TextAlignment="Center"/>
+                    <ScrollViewer Grid.Row="2">
+                        <Image Source="{Binding Tirinha.Image}"/>
+                    </ScrollViewer>
+                </Grid>
             </controls:PivotItem>
             <controls:PivotItem Header="descrição">
                 <ScrollViewer>

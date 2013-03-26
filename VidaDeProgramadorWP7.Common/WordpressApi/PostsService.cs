@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using AlbertoMonteiroWP7Tools.Controls;
 using AlbertoMonteiroWP7Tools.Extensions;
-using VidaDeProgramador.Persistence;
+using VidaDeProgramador.Common.Persistence;
 
-namespace VidaDeProgramador.WordpressApi
+namespace VidaDeProgramador.Common.WordpressApi
 {
     public class PostsService
     {
@@ -56,16 +56,15 @@ namespace VidaDeProgramador.WordpressApi
                     string srcImagem = imagemRegex.Match(item.Element("description").Value).Groups["imagem"].Value;
                     string body = corpoRegex.Match(item.Element("description").Value).Groups["corpo"].Value;
 
-                    var tirinha = new Tirinha
-                    {
-                        Title = item.Element("title").Value,
-                        Body = HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine)),
-                        Image = srcImagem,
-                        Link = item.Element("link").Value,
-                        PublicadoEm = DateTime.Parse(item.Element("pubDate").Value),
-                        LinkComentarios = item.Element(XName.Get("commentRss", wfw.NamespaceName)).Value,
-                        TotalComentarios = int.Parse(item.Element(XName.Get("comments", slash.NamespaceName)).Value)
-                    };
+                    var tirinha = new Tirinha(
+                        item.Element("title").Value,
+                        HttpUtility.HtmlDecode(body.Replace("<br />", Environment.NewLine)),
+                        srcImagem,
+                        item.Element("link").Value,
+                        DateTime.Parse(item.Element("pubDate").Value),
+                        item.Element(XName.Get("commentRss", wfw.NamespaceName)).Value,
+                        int.Parse(item.Element(XName.Get("comments", slash.NamespaceName)).Value)
+                    );
                     tirinha.Nova = !vdpContext.TirinhasLidas.Any(x => x.Link == tirinha.Link);
                     tirinhas.Add(tirinha);
                 }

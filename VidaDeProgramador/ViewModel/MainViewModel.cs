@@ -7,8 +7,9 @@ using System.Windows;
 using AlbertoMonteiroWP7Tools.Navigation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using VidaDeProgramador.Persistence;
-using VidaDeProgramador.WordpressApi;
+using VidaDeProgramador.Common.Persistence;
+using VidaDeProgramador.Common.WordpressApi;
+using System.Linq;
 
 namespace VidaDeProgramador.ViewModel
 {
@@ -20,16 +21,16 @@ namespace VidaDeProgramador.ViewModel
         private int page;
         private int position;
 
-        private ObservableCollection<Tirinha> tirinhas;
+        private ObservableCollection<TirinhaModel> tirinhas;
 
         public MainViewModel(NavigationService navigationService)
         {
-            Tirinhas = new ObservableCollection<Tirinha>();
+            Tirinhas = new ObservableCollection<TirinhaModel>();
             postsService = new PostsService(new VDPContext());
             if (!IsInDesignMode)
             {
                 SynchronizationContext.Current.Post(state => LoadData(true), null);
-                TirinhaSelected = new RelayCommand<Tirinha>(tirinha =>
+                TirinhaSelected = new RelayCommand<TirinhaModel>(tirinha =>
                 {
                     IsolatedStorageSettings.ApplicationSettings.Clear();
                     IsolatedStorageSettings.ApplicationSettings.Add("TirinhaCorrent", tirinha);
@@ -40,9 +41,9 @@ namespace VidaDeProgramador.ViewModel
             }
         }
 
-        public RelayCommand<Tirinha> TirinhaSelected { get; set; }
+        public RelayCommand<TirinhaModel> TirinhaSelected { get; set; }
 
-        public ObservableCollection<Tirinha> Tirinhas
+        public ObservableCollection<TirinhaModel> Tirinhas
         {
             get { return tirinhas; }
             set
@@ -81,8 +82,8 @@ namespace VidaDeProgramador.ViewModel
                     loadingData = true;
                     if (primeiraPagina)
                         page = 0;
-                    IEnumerable<Tirinha> posts = await postsService.GetPosts(++page);
-                    foreach (Tirinha post in posts)
+                    var posts = await postsService.GetPosts(++page);
+                    foreach (var post in posts.Select(x => new TirinhaModel(x)))
                         Tirinhas.Add(post);
                 }
             }

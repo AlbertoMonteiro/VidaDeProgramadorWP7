@@ -5,8 +5,7 @@ using System.Windows.Navigation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Controls;
-using VidaDeProgramador.Persistence;
-using VidaDeProgramador.WordpressApi;
+using VidaDeProgramador.Common.Persistence;
 using NavigationService = AlbertoMonteiroWP7Tools.Navigation.NavigationService;
 
 namespace VidaDeProgramador.ViewModel
@@ -17,7 +16,7 @@ namespace VidaDeProgramador.ViewModel
         private readonly VDPContext vdpContext;
         private Visibility landscapeLayoutVisible;
         private Visibility portraitLayoutVisible;
-        private Tirinha tirinha;
+        private TirinhaModel tirinha;
         private int selectedIndex;
 
         public TirinhaViewModel(NavigationService navigationService)
@@ -25,7 +24,7 @@ namespace VidaDeProgramador.ViewModel
             this.navigationService = navigationService;
             if (IsInDesignMode)
             {
-                Tirinha = new Tirinha();
+                Tirinha = new TirinhaModel();
             }
             else
             {
@@ -64,7 +63,7 @@ namespace VidaDeProgramador.ViewModel
             }
         }
 
-        public Tirinha Tirinha
+        public TirinhaModel Tirinha
         {
             get { return tirinha; }
             set
@@ -93,7 +92,7 @@ namespace VidaDeProgramador.ViewModel
                 PortraitLayoutVisible = Visibility.Visible;
                 LandscapeLayoutVisible = Visibility.Collapsed;
 
-                Tirinha = (Tirinha)IsolatedStorageSettings.ApplicationSettings["TirinhaCorrent"];
+                Tirinha = (TirinhaModel)IsolatedStorageSettings.ApplicationSettings["TirinhaCorrent"];
                 if (!vdpContext.TirinhasLidas.Any(tirinhaLida => tirinhaLida.Link == Tirinha.Link))
                 {
                     vdpContext.TirinhasLidas.InsertOnSubmit(new TirinhaLida { Link = Tirinha.Link });

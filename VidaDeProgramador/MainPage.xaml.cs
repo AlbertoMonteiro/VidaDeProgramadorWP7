@@ -9,7 +9,6 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using VidaDeProgramador.Utils;
 using VidaDeProgramador.ViewModel;
-using VidaDeProgramador.WordpressApi;
 
 namespace VidaDeProgramador
 {

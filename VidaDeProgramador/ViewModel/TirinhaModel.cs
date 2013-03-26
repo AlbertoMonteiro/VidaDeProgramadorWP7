@@ -1,14 +1,18 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using VidaDeProgramador.Common.WordpressApi;
 
-namespace VidaDeProgramador.WordpressApi
+namespace VidaDeProgramador.ViewModel
 {
-    public class Tirinha : INotifyPropertyChanged
+    public class TirinhaModel : INotifyPropertyChanged
     {
         private string body;
         private string image;
@@ -23,7 +27,7 @@ namespace VidaDeProgramador.WordpressApi
         const int TileTamanho = 200;
         const int NovoTamanho = 34;
 
-        public Tirinha()
+        public TirinhaModel()
         {
             Nova = true;
 
@@ -32,6 +36,19 @@ namespace VidaDeProgramador.WordpressApi
                 CreateOptions = BitmapCreateOptions.None
             };
             novoImage.ImageOpened += (sender, args) => novo = new WriteableBitmap(novoImage);
+        }
+
+        public TirinhaModel(Tirinha tirinha)
+            :this()
+        {
+            title = tirinha.Title;
+            body = tirinha.Body;
+            image = tirinha.Image;
+            link = tirinha.Link;
+            publicadoEm = tirinha.PublicadoEm;
+            linkComentarios = tirinha.LinkComentarios;
+            totalComentarios = tirinha.TotalComentarios;
+            nova = tirinha.Nova;
         }
 
         public string Title

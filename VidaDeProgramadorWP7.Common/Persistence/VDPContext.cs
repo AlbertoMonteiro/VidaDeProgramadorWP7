@@ -1,6 +1,6 @@
 ﻿using System.Data.Linq;
 
-namespace VidaDeProgramador.Persistence
+namespace VidaDeProgramador.Common.Persistence
 {
     public class VDPContext : DataContext
     {
