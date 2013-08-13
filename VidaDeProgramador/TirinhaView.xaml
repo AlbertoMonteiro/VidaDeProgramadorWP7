@@ -47,12 +47,31 @@
                 </Grid>
             </controls:PivotItem>
             <controls:PivotItem Header="descrição">
-                <ScrollViewer>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding Tirinha.Body}" Height="643" Width="420" />
-                </ScrollViewer>
+                <Grid Background="White">
+                    <Rectangle StrokeDashArray="0.5 1.0 0.3" Stroke="#FFCCCCCC" StrokeThickness="3" Fill="#FFFFFFEA"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Tirinha.Body}" Foreground="#FF333333" Padding="10" Background="{x:Null}" BorderThickness="0" IsReadOnly="True" BorderBrush="{x:Null}" SelectionForeground="{x:Null}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" />
+                </Grid>
             </controls:PivotItem>
             <controls:PivotItem Header="comentários">
-                <Grid />
+                <Grid>
+                    <ListBox ItemsSource="{Binding Comentarios}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid d:DesignWidth="480" d:DesignHeight="150" Margin="0,10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Autor}" FontSize="36" FontFamily="Segoe UI"/>
+                                        <TextBlock Text="{Binding Data, StringFormat=dd/MM/yyyy hh:mm}" VerticalAlignment="Bottom" Margin="10,0,0,0" Foreground="Gainsboro" FontFamily="Segoe UI"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Corpo}" Grid.Row="1" TextWrapping="Wrap" FontSize="20" FontFamily="Segoe UI"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
         <ScrollViewer Visibility="{Binding LandscapeLayoutVisible}">

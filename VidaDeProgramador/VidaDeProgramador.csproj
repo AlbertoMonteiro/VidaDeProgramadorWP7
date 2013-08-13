@@ -181,9 +181,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VidaDeProgramador.Schedule\VidaDeProgramador.Schedule.csproj">
-      <Project>{74E12B18-DBE8-4B69-8894-BC0A53F9427B}</Project>
-      <Name>VidaDeProgramador.Schedule</Name>
+    <ProjectReference Include="..\VidaDeProgramador.Core\VidaDeProgramador.Core.csproj">
+      <Project>{D7421E16-28B4-4CC9-B34C-3563463D51D3}</Project>
+      <Name>VidaDeProgramador.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\VidaDeProgramadorWP7.Common\VidaDeProgramador.Common.csproj">
       <Project>{1283C87A-CD48-4ED9-86C5-ED3593FDC7B6}</Project>

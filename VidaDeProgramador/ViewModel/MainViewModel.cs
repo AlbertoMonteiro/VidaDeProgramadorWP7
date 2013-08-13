@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using AlbertoMonteiroWP7Tools.Navigation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using VidaDeProgramador.Common.Persistence;
-using VidaDeProgramador.Common.WordpressApi;
-using System.Linq;
+using VidaDeProgramador.Core;
 
 namespace VidaDeProgramador.ViewModel
 {
@@ -22,11 +21,13 @@ namespace VidaDeProgramador.ViewModel
         private int position;
 
         private ObservableCollection<TirinhaModel> tirinhas;
+        private VDPContext vdpContext;
 
         public MainViewModel(NavigationService navigationService)
         {
             Tirinhas = new ObservableCollection<TirinhaModel>();
-            postsService = new PostsService(new VDPContext());
+            vdpContext = new VDPContext();
+            postsService = new PostsService();
             if (!IsInDesignMode)
             {
                 SynchronizationContext.Current.Post(state => LoadData(true), null);
@@ -82,7 +83,7 @@ namespace VidaDeProgramador.ViewModel
                     loadingData = true;
                     if (primeiraPagina)
                         page = 0;
-                    var posts = await postsService.GetPosts(++page);
+                    var posts = await postsService.GetPosts(++page,tirinha => !vdpContext.TirinhasLidas.Any(x => x.Link == tirinha.Link));
                     foreach (var post in posts.Select(x => new TirinhaModel(x)))
                         Tirinhas.Add(post);
                 }

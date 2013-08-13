@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using VidaDeProgramador.Common.Persistence;
-using VidaDeProgramador.Common.WordpressApi;
 
 namespace VidaDeProgramador.Schedule
 {

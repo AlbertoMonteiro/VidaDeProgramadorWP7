@@ -1,6 +1,6 @@
 using System;
 
-namespace VidaDeProgramador.Common.WordpressApi
+namespace VidaDeProgramador.Core
 {
     public class Tirinha
     {
